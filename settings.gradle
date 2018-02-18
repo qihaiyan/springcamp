@@ -1,1 +1,3 @@
 include 'spring-data-jpa-multisource'
+include 'spring-aop'
+
