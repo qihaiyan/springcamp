@@ -1,4 +1,4 @@
-package com.example.cache.demo;
+package cn.springcamp.springcache;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,31 +22,10 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     @Value("${spring.cache.redis.time-to-live:3600}")
     private Long keyExpiration;
 
-//    @Bean
-//    private RedisCacheConfiguration cacheConfiguration() {
-//        ObjectMapper cborMapper = new ObjectMapper(new CBORFactory());
-////        ObjectMapper smileMapper = new ObjectMapper(new SmileFactory());
-////        smileMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
-//        cborMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
-//
-//        return RedisCacheConfiguration.defaultCacheConfig()
-//                .entryTtl(Duration.ofSeconds(keyExpiration))
-//                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer(cborMapper)))
-//                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-//                .disableCachingNullValues();
-//    }
-
     @Bean
     public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
 
-//        RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
-//        cacheConfiguration = cacheConfiguration.serializeValuesWith(valueSerializationPair);
-////        cacheConfiguration = cacheConfiguration.prefixKeysWith("myPrefix");
-//        cacheConfiguration = cacheConfiguration.entryTtl(Duration.ofSeconds(30));
-
         ObjectMapper cborMapper = new ObjectMapper(new CBORFactory());
-//        ObjectMapper smileMapper = new ObjectMapper(new SmileFactory());
-//        smileMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
         cborMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
 
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
@@ -60,25 +39,5 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
                 .cacheDefaults(cacheConfiguration)
                 .build();
 
-//        return new RedisCacheManager(redisCacheWriter, cacheConfiguration);
-
-
-//        redisTemplate.setKeySerializer(new GenericToStringSerializer<>(Object.class));
-//        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer(cborMapper));
-//
-//        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
-//        cacheManager.setDefaultExpiration(keyExpiration);
-//        cacheManager.setUsePrefix(true);
-//        cacheManager.setCachePrefix(new RedisCachePrefix() {
-//            private final RedisSerializer<String> serializer = new StringRedisSerializer();
-//            private final String delimiter = ":";
-//
-//            public byte[] prefix(String cacheName) {
-//                return this.serializer
-//                        .serialize(cacheName.concat(this.delimiter));
-//            }
-//        });
-//
-//        return cacheManager;
     }
 }

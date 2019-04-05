@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '1.5.19.RELEASE'
+		springBootVersion = '2.1.4.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -12,10 +12,13 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
 
 group = 'com.example.cache'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
@@ -25,8 +28,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-protobuf'
+//	implementation 'org.apache.commons:commons-pool2'
+//	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-protobuf'
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-cbor'
-	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-smile'
+//	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-smile'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

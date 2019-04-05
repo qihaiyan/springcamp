@@ -1,4 +1,4 @@
-package com.example.cache.demo;
+package cn.springcamp.springcache;
 
 public class Greeting {
 

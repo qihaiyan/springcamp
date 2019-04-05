@@ -1,4 +1,4 @@
-package com.example.cache.demo;
+package cn.springcamp.springcache;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
