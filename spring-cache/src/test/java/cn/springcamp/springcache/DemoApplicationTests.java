@@ -8,7 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -29,8 +31,8 @@ public class DemoApplicationTests {
 	@Test
 	public void paramGreetingShouldReturnTailoredMessage() throws Exception {
 
-		this.mockMvc.perform(post("/greeting").contentType(MediaType.APPLICATION_FORM_URLENCODED).content("p1=test"))
-				.andDo(print()).andExpect(status().isOk())
+		this.mockMvc.perform(get("/greeting?id=1").contentType(MediaType.APPLICATION_FORM_URLENCODED).content("p1=test"))
+				.andDo(MockMvcResultHandlers.print()).andExpect(status().isOk())
 				.andExpect(jsonPath("$.content").value("Hello, 你好 Community!"));
 	}
 }
