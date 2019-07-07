@@ -2,9 +2,9 @@ package cn.springcamp.springdatajpa.multisource.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,7 +42,6 @@ public class OtherDataConfig {
         return builder
                 .dataSource(otherDataSource)
                 .packages("cn.springcamp.springdatajpa.multisource.other.data")
-                .properties(jpaProperties.getHibernateProperties(otherDataSource))
                 .persistenceUnit("other")
                 .build();
     }

@@ -2,9 +2,9 @@ package cn.springcamp.springdatajpa.multisource.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,7 +44,7 @@ public class TestDataConfig {
         return builder
                 .dataSource(dataSource)
                 .packages("cn.springcamp.springdatajpa.multisource.test.data")
-                .properties(jpaProperties.getHibernateProperties(dataSource))
+//                .properties(jpaProperties.getHibernateProperties(dataSource))
                 .persistenceUnit("test")
                 .build();
     }
