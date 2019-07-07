@@ -1,6 +1,6 @@
 package cn.springcamp.springdatajpa.multisource;
 
-import cn.springcamp.springdatajpa.multisource.service.TestService;
+import cn.springcamp.springdatajpa.multisource.service.DbService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -12,11 +12,11 @@ import org.springframework.cache.annotation.EnableCaching;
 public class DemoApplication implements CommandLineRunner{
 
 	@Autowired
-	private TestService testService;
+	private DbService dbService;
 
 	@Override
 	public void run(String... args) {
-		System.out.println(this.testService.getHelloMessage());
+		System.out.println(this.dbService.getHelloMessage());
 	}
 
 	public static void main(String[] args) {

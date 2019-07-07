@@ -18,19 +18,15 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
         entityManagerFactoryRef = "primaryEntityManagerFactory",
         transactionManagerRef = "primaryTransactionManager",
-        basePackages = {"cn.springcamp.springdatajpa.multisource.test.data"}
+        basePackages = {"cn.springcamp.springdatajpa.multisource.primary.data"}
 )
 public class PrimaryDataConfig {
-
-    @Autowired
-    private JpaProperties jpaProperties;
 
     @Bean
     @Primary
@@ -52,17 +48,17 @@ public class PrimaryDataConfig {
             EntityManagerFactoryBuilder builder) {
         return builder
                 .dataSource(primaryDataSource())
-                .packages("cn.springcamp.springdatajpa.multisource.test.data")
-//                .properties(jpaProperties.getHibernateProperties(dataSource))
-                .persistenceUnit("test")
+                .packages("cn.springcamp.springdatajpa.multisource.primary.data")
+//                .properties(primaryJpaProperties().getProperties())
+                .persistenceUnit("primary")
                 .build();
     }
 
     @Primary
     @Bean(name = "primaryTransactionManager")
     public PlatformTransactionManager primaryTransactionManager(
-            @Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
-        return new JpaTransactionManager(entityManagerFactory);
+            @Qualifier("primaryEntityManagerFactory") EntityManagerFactory primaryEntityManagerFactory) {
+        return new JpaTransactionManager(primaryEntityManagerFactory);
     }
 
 }

@@ -1,6 +1,6 @@
 .idea/
 .DS_Store
 .gradle/
-/out/
+*/out/
 *.iml
-/spring-data-jpa-multisource/out/
+*/build/
