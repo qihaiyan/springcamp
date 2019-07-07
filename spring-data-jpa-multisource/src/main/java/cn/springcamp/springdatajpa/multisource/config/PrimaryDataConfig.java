@@ -1,7 +1,9 @@
 package cn.springcamp.springdatajpa.multisource.config;
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -21,28 +23,35 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        entityManagerFactoryRef = "entityManagerFactory",
+        entityManagerFactoryRef = "primaryEntityManagerFactory",
+        transactionManagerRef = "primaryTransactionManager",
         basePackages = {"cn.springcamp.springdatajpa.multisource.test.data"}
 )
-public class TestDataConfig {
+public class PrimaryDataConfig {
 
     @Autowired
     private JpaProperties jpaProperties;
 
+    @Bean
     @Primary
-    @Bean(name = "dataSource")
     @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
+    public DataSourceProperties primaryDataSourceProperties() {
+        return new DataSourceProperties();
     }
 
     @Primary
-    @Bean(name = "entityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-            EntityManagerFactoryBuilder builder,
-            @Qualifier("dataSource") DataSource dataSource) {
+    @Bean(name = "primaryDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.hikari")
+    public HikariDataSource primaryDataSource() {
+        return primaryDataSourceProperties().initializeDataSourceBuilder().type(HikariDataSource.class).build();
+    }
+
+    @Primary
+    @Bean(name = "primaryEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean primaryEntityManagerFactory(
+            EntityManagerFactoryBuilder builder) {
         return builder
-                .dataSource(dataSource)
+                .dataSource(primaryDataSource())
                 .packages("cn.springcamp.springdatajpa.multisource.test.data")
 //                .properties(jpaProperties.getHibernateProperties(dataSource))
                 .persistenceUnit("test")
@@ -50,8 +59,8 @@ public class TestDataConfig {
     }
 
     @Primary
-    @Bean(name = "transactionManager")
-    public PlatformTransactionManager transactionManager(
+    @Bean(name = "primaryTransactionManager")
+    public PlatformTransactionManager primaryTransactionManager(
             @Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
