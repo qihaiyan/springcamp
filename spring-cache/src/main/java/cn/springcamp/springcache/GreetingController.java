@@ -21,8 +21,8 @@ public class GreetingController {
     private GreetingService greetingService;
 
     @GetMapping("/greeting")
-    public List<Greeting> greeting(@RequestParam Long id) {
-        List<Greeting> greeting = greetingService.greeting(id);
+    public Greeting greeting(@RequestParam Long id) {
+        Greeting greeting = greetingService.greeting(id);
         return greeting;
     }
 }

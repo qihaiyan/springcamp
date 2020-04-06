@@ -11,8 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,19 +19,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class DemoApplicationTests {
 
-	@Autowired
-	private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-	@Test
-	public void contextLoads() {
-	}
+    @Test
+    public void contextLoads() {
+    }
 
-	@Test
-	public void paramGreetingShouldReturnTailoredMessage() throws Exception {
+    @Test
+    public void paramGreetingShouldReturnTailoredMessage() throws Exception {
 
-		this.mockMvc.perform(get("/greeting?id=1").contentType(MediaType.APPLICATION_FORM_URLENCODED).content("p1=test"))
-				.andDo(MockMvcResultHandlers.print()).andExpect(status().isOk())
-				.andExpect(jsonPath("$.content").value("Hello, 你好 Community!"));
-	}
+        this.mockMvc.perform(get("/greeting?id=1").contentType(MediaType.APPLICATION_FORM_URLENCODED).content("p1=test"))
+                .andDo(MockMvcResultHandlers.print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").value("Hello, 你好!"));
+    }
 }
 

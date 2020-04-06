@@ -15,13 +15,10 @@ public class GreetingService {
     private static final Logger log = LoggerFactory.getLogger(GreetingService.class);
 
     @Cacheable(key = "#p0")
-    public List<Greeting> greeting(Long id) {
+    public Greeting greeting(Long id) {
         try {
-            List<Greeting>  greetings = new ArrayList<>();
-            Greeting greeting = new Greeting(id, "Hello, 你好 Community!");
-            greetings.add(greeting);
-            Thread.sleep(500);
-            return greetings;
+            Greeting greeting = new Greeting(id, "Hello, 你好!");
+            return greeting;
         } catch (Exception e) {
             log.error(e.getLocalizedMessage(), e);
         }
