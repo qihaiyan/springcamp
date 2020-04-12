@@ -25,6 +25,7 @@ class CompletableFutureDemo {
         parallelstream();
         stop = System.currentTimeMillis();
         System.out.println("parallelstream time elapsed " + (stop - start));
+        timeout();
         executor.shutdown();
     }
 
@@ -100,7 +101,7 @@ class CompletableFutureDemo {
     public static void streamCompWrong() {
         // 为什么不能这么写，看上去，因为对于每一个元素，在第一个map生成Completable后，会立即执行join阻塞操作，相当于变成了串行
         long start = System.currentTimeMillis();
-        List<Long> prices2 = Stream.of("1", "2", "3", "4", "5")
+        List<Long> prices2 = Stream.of("1", "2", "3")
                 .map(p -> CompletableFuture.supplyAsync(() -> CompletableFutureDemo.getPrice("exception1")))
                 .map(CompletableFuture::join)
                 .collect(Collectors.toList());
@@ -113,6 +114,38 @@ class CompletableFutureDemo {
                 .parallelStream()
                 .map(CompletableFutureDemo::getPrice)
                 .collect(Collectors.toList());
+    }
+
+    public static void timeout() {
+        CompletableFuture.supplyAsync(() -> CompletableFutureDemo.getPrice("timeout"))
+                .acceptEither(timeoutAfter(500, TimeUnit.MILLISECONDS)
+                        , p -> {
+                            System.out.println("Executing in " + Thread.currentThread().getName() + " ,timeout price is: " + p);
+                        })
+                .whenComplete((p, ex) -> {
+                    if (ex != null) {
+                        System.out.println("Executing in " + Thread.currentThread().getName() + " ,timeout exception: " + ex);
+                    }
+                });
+
+        CompletableFuture.supplyAsync(() -> CompletableFutureDemo.getPrice("timeout"))
+                .acceptEither(timeoutAfter(2000, TimeUnit.MILLISECONDS)
+                        , p -> {
+                            System.out.println("Executing in " + Thread.currentThread().getName() + " ,timeout price is: " + p);
+                        })
+                .whenComplete((p, ex) -> {
+                    if (ex != null) {
+                        System.out.println("Executing in " + Thread.currentThread().getName() + " ,timeout exception: " + ex);
+                    }
+                });
+    }
+
+    public static <T> CompletableFuture<T> timeoutAfter(long timeout, TimeUnit unit) {
+        CompletableFuture<T> result = new CompletableFuture<T>();
+        ScheduledThreadPoolExecutor delayer = new ScheduledThreadPoolExecutor(1);
+        delayer.schedule(() -> result.completeExceptionally(new TimeoutException()), timeout, unit);
+        delayer.shutdown();
+        return result;
     }
 
     public static Long getPrice(String prod) {
