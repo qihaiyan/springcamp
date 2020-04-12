@@ -1,4 +1,4 @@
-package com.example;
+package cn.springcamp.concurrency;
 
 class ThreadLocalDemo {
     private final ThreadLocal<Transaction> currentTransaction = ThreadLocal.withInitial(NullTransaction::new);

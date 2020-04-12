@@ -1,4 +1,4 @@
-package com.example;
+package cn.springcamp.concurrency;
 
 public class DataRace {
 

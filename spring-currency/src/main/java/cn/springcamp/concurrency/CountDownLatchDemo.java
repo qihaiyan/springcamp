@@ -1,4 +1,4 @@
-package com.example;
+package cn.springcamp.concurrency;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;

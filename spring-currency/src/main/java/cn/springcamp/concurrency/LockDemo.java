@@ -1,4 +1,4 @@
-package com.example;
+package cn.springcamp.concurrency;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;

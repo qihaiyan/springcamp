@@ -1,4 +1,4 @@
-package com.example;
+package cn.springcamp.concurrency;
 
 class Synchronized {
     private int counter0;
