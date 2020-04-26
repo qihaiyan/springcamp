@@ -1,8 +1,8 @@
-package com.example;
+package cn.springcamp.concurrency;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Atomic {
+class Atomic {
 
     public static void main(String[] args) {
         AtomicRun atomicRun = new AtomicRun();
