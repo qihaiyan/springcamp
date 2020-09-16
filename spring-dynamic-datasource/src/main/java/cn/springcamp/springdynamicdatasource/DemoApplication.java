@@ -13,7 +13,7 @@ public class DemoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        databaseConfig.getShemas().stream().filter(r -> !r.getQuery().isEmpty()).forEach(current -> {
+        databaseConfig.getSchemas().stream().filter(r -> !r.getQuery().isEmpty()).forEach(current -> {
             String result = current.getJdbcTemplate().queryForObject(
                     current.getQuery(), String.class);
             System.out.println(current.getCode() + " content: " + result);

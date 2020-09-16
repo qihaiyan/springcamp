@@ -19,11 +19,11 @@ import java.util.List;
 @Component
 @ConfigurationProperties(prefix = "dynamic-data")
 public class DatabaseConfig {
-    private List<DbSchema> shemas = new ArrayList<>();
+    private List<DbSchema> schemas = new ArrayList<>();
 
     @PostConstruct
     public void init() {
-        for (DbSchema current : this.getShemas()) {
+        for (DbSchema current : this.getSchemas()) {
             HikariConfig jdbcConfig = new HikariConfig();
             jdbcConfig.setJdbcUrl(current.getDatasource().getUrl());
             jdbcConfig.setUsername(current.getDatasource().getUsername());
