@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: dynamicDatasource
+dynamic-data:
+  shemas:
+    -
+      code: dbsource1
+      datasource:
+        url: jdbc:h2:mem:db1;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        username: sa
+        password:
+      query: |
+        select 'datasource1 data'
+    -
+      code: dbsource2
+      datasource:
+        url: jdbc:h2:mem:db2;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        username: sa
+        password:
+      query: |
+        select 'datasource2 data'

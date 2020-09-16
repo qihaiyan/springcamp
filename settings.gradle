@@ -4,3 +4,5 @@ include 'spring-data-jpa-multisource'
 include 'spring-aop'
 include 'spring-cache'
 include 'spring-concurrency'
+include 'spring-dynamic-datasource'
+
