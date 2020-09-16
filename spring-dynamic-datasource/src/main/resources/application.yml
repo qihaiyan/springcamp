@@ -2,7 +2,7 @@ spring:
   application:
     name: dynamicDatasource
 dynamic-data:
-  shemas:
+  schemas:
     -
       code: dbsource1
       datasource:
