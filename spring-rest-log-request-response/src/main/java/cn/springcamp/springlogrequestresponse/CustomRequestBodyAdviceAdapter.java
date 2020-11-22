@@ -10,6 +10,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdviceAd
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Type;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -36,7 +38,17 @@ public class CustomRequestBodyAdviceAdapter extends RequestBodyAdviceAdapter {
         stringBuilder.append("REQUEST ");
         stringBuilder.append("method=[").append(httpServletRequest.getMethod()).append("] ");
         stringBuilder.append("path=[").append(httpServletRequest.getRequestURI()).append("] ");
-        stringBuilder.append("headers=[").append(parameters.keySet()).append("] ");
+
+        Map<String, String> headerMap = new HashMap<>();
+
+        Enumeration<String> headerNames = httpServletRequest.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String key = headerNames.nextElement();
+            String value = httpServletRequest.getHeader(key);
+            headerMap.put(key, value);
+        }
+
+        stringBuilder.append("headers=[").append(headerMap).append("] ");
 
         if (!parameters.isEmpty()) {
             stringBuilder.append("parameters=[").append(parameters).append("] ");
