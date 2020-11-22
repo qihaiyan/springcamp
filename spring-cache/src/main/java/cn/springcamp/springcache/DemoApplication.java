@@ -13,13 +13,13 @@ import org.springframework.web.client.RestTemplate;
 @ComponentScan({"cn.springcamp.springcache"})
 public class DemoApplication {
 
-		public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
 
-	@Bean
-	RestTemplate restTemplate(RestTemplateBuilder builder){
-			return builder.build();
-	}
+    @Bean
+    RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
+    }
 }
 
