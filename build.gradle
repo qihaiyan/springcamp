@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.2.6.RELEASE'
+        springBootVersion = '2.2.12.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -25,7 +25,6 @@ subprojects {
     repositories {
         mavenCentral()
     }
-
 
     dependencies {
         implementation('org.springframework.boot:spring-boot-starter')
