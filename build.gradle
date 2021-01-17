@@ -3,6 +3,7 @@ buildscript {
         springBootVersion = '2.2.12.RELEASE'
     }
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/public/' }
         mavenCentral()
     }
     dependencies {
@@ -23,6 +24,8 @@ subprojects {
     targetCompatibility = 1.8
 
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        mavenLocal()
         mavenCentral()
     }
 

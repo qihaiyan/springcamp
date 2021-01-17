@@ -25,7 +25,6 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
 
         ObjectMapper cborMapper = new ObjectMapper(new CBORFactory());
-        cborMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
 
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofSeconds(keyExpiration))

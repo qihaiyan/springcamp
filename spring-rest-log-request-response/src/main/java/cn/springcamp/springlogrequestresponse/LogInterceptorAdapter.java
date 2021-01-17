@@ -3,6 +3,7 @@ package cn.springcamp.springlogrequestresponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.DispatcherType;
 import org.springframework.http.HttpMethod;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
@@ -17,10 +18,8 @@ import java.util.Map;
 @Component
 public class LogInterceptorAdapter extends HandlerInterceptorAdapter {
 
-    @Override
-    public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response,
-                             Object handler) {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+                                @Nullable Exception ex) throws Exception {
         if (DispatcherType.REQUEST.name().equals(request.getDispatcherType().name())
                 && request.getMethod().equals(HttpMethod.GET.name())) {
 
@@ -32,6 +31,6 @@ public class LogInterceptorAdapter extends HandlerInterceptorAdapter {
             // 避免从 inputStream 中读取body并打印
 
         }
-        return true;
+        log.info("logInterceptor afterCompletion status=" + response.getStatus());
     }
 }
