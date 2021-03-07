@@ -1,0 +1,15 @@
+dependencies {
+    implementation "org.springframework.cloud:spring-cloud-stream-binder-kafka"
+    testImplementation "org.springframework.kafka:spring-kafka-test"
+    testImplementation "junit:junit"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR10"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

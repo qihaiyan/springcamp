@@ -1,0 +1,4 @@
+spring.cloud.stream.bindings:
+  handle-out-0.destination: input-topic
+  handle-in-0.destination: output-topic
+  handle-in-0.group: embeddedKafkaApplication
