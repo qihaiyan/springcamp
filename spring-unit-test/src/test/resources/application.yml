@@ -1,4 +1,4 @@
 spring.cloud.stream.bindings:
-  handle-out-0.destination: input-topic
-  handle-in-0.destination: output-topic
+  handle-out-0.destination: testEmbeddedOut
+  handle-in-0.destination: testEmbeddedIn
   handle-in-0.group: embeddedKafkaApplication

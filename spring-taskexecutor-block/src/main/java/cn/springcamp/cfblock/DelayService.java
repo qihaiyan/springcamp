@@ -1,4 +1,4 @@
-package com.example.cfblock;
+package cn.springcamp.cfblock;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;

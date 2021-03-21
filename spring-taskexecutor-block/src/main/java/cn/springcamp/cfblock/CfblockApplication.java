@@ -1,4 +1,4 @@
-package com.example.cfblock;
+package cn.springcamp.cfblock;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

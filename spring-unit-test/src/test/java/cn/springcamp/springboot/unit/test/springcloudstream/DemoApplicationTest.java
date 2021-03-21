@@ -1,4 +1,4 @@
-package cn.springcamp.springunittest;
+package cn.springcamp.springboot.unit.test.springcloudstream;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -24,8 +24,8 @@ import java.util.Map;
 @DirtiesContext
 public class DemoApplicationTest {
 
-    private static final String INPUT_TOPIC = "input-topic";
-    private static final String OUTPUT_TOPIC = "output-topic";
+    private static final String INPUT_TOPIC = "testEmbeddedIn";
+    private static final String OUTPUT_TOPIC = "testEmbeddedOut";
     private static final String GROUP_NAME = "embeddedKafkaApplication";
 
     @ClassRule
@@ -64,7 +64,7 @@ public class DemoApplicationTest {
 
         ConsumerRecord<String, String> cr = KafkaTestUtils.getSingleRecord(consumer, OUTPUT_TOPIC);
 
-        System.out.println("Contenu chaine resultat : " + cr.value());
+        System.out.println("ConsumerRecord : " + cr.value());
     }
 
 }
