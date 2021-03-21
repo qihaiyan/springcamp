@@ -13,6 +13,7 @@ buildscript {
 group = 'cn.springcamp'
 version = '0.0.1-SNAPSHOT'
 
+
 subprojects {
 
     apply plugin: 'java'
@@ -22,6 +23,12 @@ subprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
     repositories {
         maven { url 'https://maven.aliyun.com/repository/public/' }
         mavenLocal()
@@ -30,6 +37,7 @@ subprojects {
 
     dependencies {
         implementation('org.springframework.boot:spring-boot-starter')
+        compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
         testImplementation('org.springframework.boot:spring-boot-starter-test')
         testImplementation('com.github.fppt:jedis-mock:0.1.16')
