@@ -1,4 +1,7 @@
-spring.cloud.stream.bindings:
-  handle-out-0.destination: testEmbeddedOut
-  handle-in-0.destination: testEmbeddedIn
-  handle-in-0.group: embeddedKafkaApplication
+spring:
+  redis:
+    port: 10033
+  cloud.stream.bindings:
+    handle-out-0.destination: testEmbeddedOut
+    handle-in-0.destination: testEmbeddedIn
+    handle-in-0.group: embeddedKafkaApplication
