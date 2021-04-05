@@ -1,5 +1,7 @@
 package cn.springcamp.springboot.unit.test;
 
+import cn.springcamp.springboot.unit.test.data.MyDomain;
+import cn.springcamp.springboot.unit.test.data.MyDomainRepository;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.hamcrest.Matchers;
@@ -51,6 +53,9 @@ public class DemoApplicationTest {
 
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private MyDomainRepository myDomainRepository;
+
     private MockRestServiceServer mockRestServiceServer;
 
     @Before
@@ -98,11 +103,22 @@ public class DemoApplicationTest {
     }
 
     @Test
+    public void testDbCallRest() {
+        MyDomain myDomain = new MyDomain();
+        myDomain.setName("test");
+        myDomain = myDomainRepository.save(myDomain);
+        MyDomain resp = testRestTemplate.getForObject("/db?id=" + myDomain.getId(), MyDomain.class);
+        System.out.println("db result : " + resp);
+        assertThat(resp.getName(), is("test"));
+    }
+
+    @Test
     public void testKafkaSendReceive() {
         kafkaTemplate.send(INPUT_TOPIC, "foo");
 
         ConsumerRecord<String, String> cr = KafkaTestUtils.getSingleRecord(consumer, OUTPUT_TOPIC);
 
         System.out.println("ConsumerRecord : " + cr.value());
+        assertThat(cr.value(), is("FOO"));
     }
 }

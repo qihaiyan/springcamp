@@ -1,11 +1,13 @@
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation "org.springframework.cloud:spring-cloud-stream-binder-kafka"
-    implementation "org.apache.httpcomponents:httpclient"
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "org.springframework.kafka:spring-kafka-test"
     testImplementation "junit:junit"
+    testImplementation 'com.h2database:h2'
+    testImplementation 'com.github.fppt:jedis-mock:0.1.16'
 }
 
 dependencyManagement {
