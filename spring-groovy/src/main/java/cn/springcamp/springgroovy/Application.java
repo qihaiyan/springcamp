@@ -7,11 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
-@ImportResource("classpath:xml-bean-config.xml")
+@ImportResource({"classpath:xml-bean-config.xml", "classpath:BeanBuilder.groovy"})
 public class Application implements CommandLineRunner {
 
     @Autowired
     private MyService myService;
+    @Autowired
+    private MyService myService2;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -22,5 +24,7 @@ public class Application implements CommandLineRunner {
         MyDomain myDomain = new MyDomain();
         myDomain.setName("test");
         System.out.println(myService.fun(myDomain));
+        myDomain.setName("test2");
+        System.out.println(myService2.fun(myDomain));
     }
 }

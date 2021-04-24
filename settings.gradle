@@ -9,4 +9,3 @@ include 'spring-rest-log-request-response'
 include 'spring-taskexecutor-block'
 include 'spring-unit-test'
 include 'spring-groovy'
-
