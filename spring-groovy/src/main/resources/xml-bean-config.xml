@@ -1,0 +1,9 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/lang https://www.springframework.org/schema/lang/spring-lang.xsd">
+    <lang:groovy id="myService" script-source="classpath:MyServiceImpl.groovy">
+    </lang:groovy>
+</beans>
