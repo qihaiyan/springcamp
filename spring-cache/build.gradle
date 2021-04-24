@@ -3,8 +3,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-//	implementation 'org.apache.commons:commons-pool2'
-//	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-protobuf'
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-cbor'
-//	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-smile'
+	testImplementation 'com.github.fppt:jedis-mock:0.1.16'
 }
