@@ -7,7 +7,9 @@ class MyServiceImpl implements MyService {
     @Autowired
     FunBean useBean;
 
+    String myProp;
+
     String fun(MyDomain myDomain) {
-        return myDomain.toString() + useBean.getFunName();
+        return myDomain.toString() + useBean.getFunName() + myProp;
     }
 }

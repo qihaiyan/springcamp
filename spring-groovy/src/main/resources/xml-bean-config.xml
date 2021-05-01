@@ -4,6 +4,7 @@
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/lang https://www.springframework.org/schema/lang/spring-lang.xsd">
-    <lang:groovy id="myService" script-source="classpath:MyServiceImpl.groovy">
+    <lang:groovy id="myService" script-source="classpath:MyServiceImpl.groovy" refresh-check-delay="10000" >
+        <lang:property name="myProp" value=" this is xml init prop" />
     </lang:groovy>
 </beans>
