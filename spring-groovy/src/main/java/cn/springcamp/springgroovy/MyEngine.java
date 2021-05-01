@@ -6,6 +6,7 @@ import groovy.util.GroovyScriptEngine;
 import groovy.util.ResourceException;
 import groovy.util.ScriptException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
@@ -15,6 +16,9 @@ import java.io.IOException;
 @Component
 public class MyEngine {
     private final GroovyScriptEngine engine;
+
+    @Autowired
+    private FunBean funBean;
 
     public MyEngine() throws IOException {
 
@@ -32,6 +36,7 @@ public class MyEngine {
 
         Binding binding = new Binding();
         binding.setVariable("arg","test");
+        binding.setVariable("funBean",funBean);
         Object result1 = engine.run("CalcScript.groovy", binding);
         log.info("Result of CalcScript.groovy is {}", result1);
     }
