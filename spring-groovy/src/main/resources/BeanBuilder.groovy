@@ -5,7 +5,7 @@ beans {
     scriptFactoryPostProcessor(ScriptFactoryPostProcessor) {
         defaultRefreshCheckDelay = 10000
     }
-    myService2(GroovyScriptFactory, 'classpath:MyServiceImpl.groovy') {
+    myServiceGroovy(GroovyScriptFactory, 'classpath:MyServiceImpl.groovy') {
         bean ->
             bean.scope = "prototype"
             myProp = ' this is Bean Builder init prop'

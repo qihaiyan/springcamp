@@ -32,12 +32,12 @@ public class MyEngine {
         GroovyObject calc = calcClass.newInstance();
 
         Object result = calc.invokeMethod("calcSum", new Object[]{x, y});
-        log.info("Result of CalcScript.calcSum() method is {}", result);
+        System.out.println("Result of CalcScript.calcSum() method is " + result);
 
         Binding binding = new Binding();
-        binding.setVariable("arg","test");
-        binding.setVariable("funBean",funBean);
+        binding.setVariable("arg", "test");
+        binding.setVariable("funBean", funBean);
         Object result1 = engine.run("CalcScript.groovy", binding);
-        log.info("Result of CalcScript.groovy is {}", result1);
+        System.out.println("Result of CalcScript.groovy is " + result1);
     }
 }

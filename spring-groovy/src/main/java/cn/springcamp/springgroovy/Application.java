@@ -13,9 +13,9 @@ import org.springframework.context.annotation.ImportResource;
 public class Application implements CommandLineRunner {
 
     @Autowired
-    private MyService myService;
+    private MyService myServiceXml;
     @Autowired
-    private MyService myService2;
+    private MyService myServiceGroovy;
     @Autowired
     private MyEngine myEngine;
 
@@ -27,9 +27,9 @@ public class Application implements CommandLineRunner {
     public void run(String... args) throws ScriptException, ResourceException, IllegalAccessException, InstantiationException {
         MyDomain myDomain = new MyDomain();
         myDomain.setName("test");
-        System.out.println(myService.fun(myDomain));
+        System.out.println(myServiceXml.fun(myDomain));
         myDomain.setName("test2");
-        System.out.println(myService2.fun(myDomain));
+        System.out.println(myServiceGroovy.fun(myDomain));
         myEngine.runScript(1, 2);
     }
 }
