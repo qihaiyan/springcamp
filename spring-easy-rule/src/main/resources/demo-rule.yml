@@ -1,0 +1,15 @@
+name: "age rule"
+description: ""
+priority: 1
+condition: "#person.getAdult() == false"
+actions:
+  - "T(java.lang.System).out.println(\"Shop: Sorry, you are not allowed to buy alcohol\")"
+  - "#person.setAdult(true)"
+  - "#person.setAge(18)"
+---
+name: "alcohol rule"
+description: ""
+priority: 1
+condition: "#person.getAdult() == true"
+actions:
+  - "T(java.lang.System).out.println(\"Shop: you are now allowed to buy alcohol\")"

@@ -1,0 +1,7 @@
+rule:
+  skip-on-first-failed-rule: true
+  skip-on-first-applied-rule: false
+  skip-on-first-non-triggered-rule: true
+  rules:
+    - rule-id: "demo"
+      rule-file-location: "classpath:demo-rule.yml"

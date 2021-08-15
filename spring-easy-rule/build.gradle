@@ -1,0 +1,11 @@
+dependencies {
+    implementation 'org.jeasy:easy-rules-core:4.1.0'
+    implementation 'org.jeasy:easy-rules-spel:4.1.0'
+    implementation 'org.jeasy:easy-rules-support:4.1.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.vintage:junit-vintage-engine'
+    testImplementation 'com.h2database:h2'
+}
+test {
+    useJUnitPlatform()
+}
