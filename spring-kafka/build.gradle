@@ -1,0 +1,18 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "org.springframework.cloud:spring-cloud-stream-binder-kafka"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.springframework.kafka:spring-kafka-test"
+    testImplementation 'org.junit.vintage:junit-vintage-engine'
+    testImplementation 'org.awaitility:awaitility'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR10"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

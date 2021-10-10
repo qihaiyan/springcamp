@@ -116,7 +116,7 @@ public class DemoApplicationTest {
     public void testKafkaSendReceive() {
         kafkaTemplate.send(INPUT_TOPIC, "foo");
 
-        ConsumerRecord<String, String> cr = KafkaTestUtils.getSingleRecord(consumer, OUTPUT_TOPIC);
+        ConsumerRecord<String, String> cr = KafkaTestUtils.getSingleRecord(consumer, OUTPUT_TOPIC, 3000);
 
         System.out.println("ConsumerRecord : " + cr.value());
         assertThat(cr.value(), is("FOO"));

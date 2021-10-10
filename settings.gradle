@@ -10,3 +10,5 @@ include 'spring-taskexecutor-block'
 include 'spring-unit-test'
 include 'spring-groovy'
 include 'spring-easy-rule'
+include 'spring-kafka'
+
