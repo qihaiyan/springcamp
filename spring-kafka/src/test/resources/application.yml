@@ -1,8 +1,15 @@
 spring:
-  cloud.stream.bindings:
-    handle-out-0.destination: testEmbeddedOut
-    handle-in-0.destination: testEmbeddedIn
-    handle-in-0.group: utgroup
+  cloud.stream:
+    bindings:
+      handle-out-0.destination: testEmbeddedOut
+      handle-in-0:
+        destination: testEmbeddedIn
+        content-type: text/plain
+        group: utgroup
+    kafka:
+      binder.configuration:
+        key.serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+        value.serializer: org.apache.kafka.common.serialization.ByteArraySerializer
   kafka:
     consumer:
       group-id: utgroup

@@ -3,6 +3,7 @@ package cn.springcamp.springkafka;
 import cn.springcamp.springkafka.container.MessageListenerContainerConsumer;
 import cn.springcamp.springkafka.listener.KafkaListenerConsumer;
 import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import java.util.Map;
 
 import static cn.springcamp.springkafka.container.MessageListenerContainerConsumer.LISTENER_CONTAINER_TOPIC;
 import static org.awaitility.Awaitility.await;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -37,9 +40,9 @@ public class ApplicationTest {
 
     public static EmbeddedKafkaBroker embeddedKafka = embeddedKafkaRule.getEmbeddedKafka();
 
-    private static KafkaTemplate<String, String> kafkaTemplate;
+    private static KafkaTemplate<String, Object> kafkaTemplate;
 
-    private static Consumer<String, String> consumer;
+    private static Consumer<String, Object> consumer;
 
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -60,11 +63,11 @@ public class ApplicationTest {
         System.setProperty("spring.kafka.bootstrap-servers", embeddedKafka.getBrokersAsString());
 
         Map<String, Object> senderProps = KafkaTestUtils.producerProps(embeddedKafka);
-        DefaultKafkaProducerFactory<String, String> pf = new DefaultKafkaProducerFactory<>(senderProps);
+        DefaultKafkaProducerFactory<String, Object> pf = new DefaultKafkaProducerFactory<>(senderProps);
         kafkaTemplate = new KafkaTemplate<>(pf, true);
 
         Map<String, Object> consumerProps = KafkaTestUtils.consumerProps(GROUP_NAME, "false", embeddedKafka);
-        DefaultKafkaConsumerFactory<String, String> cf = new DefaultKafkaConsumerFactory<>(consumerProps);
+        DefaultKafkaConsumerFactory<String, Object> cf = new DefaultKafkaConsumerFactory<>(consumerProps);
         consumer = cf.createConsumer();
         embeddedKafka.consumeFromEmbeddedTopics(consumer, KAFKA_LISTENER_TOPIC, CLOUD_STREAM_OUTPUT_TOPIC);
     }
@@ -77,14 +80,24 @@ public class ApplicationTest {
     }
 
     @Test
-    public void testKafkaLisenerSendReceive() {
+    public void testKafkaLisener() {
         kafkaProducer.send(KAFKA_LISTENER_TOPIC, "foo");
         await().until(() -> "foo".equals(kafkaListenerConsumer.getPayload()));
     }
 
     @Test
-    public void testKafkaListenerContainer() {
-        kafkaProducer.send(LISTENER_CONTAINER_TOPIC, "foo");
+    public void testListenerContainer() {
+        kafkaTemplate.send(LISTENER_CONTAINER_TOPIC, "foo");
         await().until(() -> messageListenerContainerConsumer.consumedMessages.contains("foo"));
+    }
+
+    @Test
+    public void testCloudStream() {
+        kafkaTemplate.send(CLOUD_STREAM_INPUT_TOPIC, "foo");
+
+        ConsumerRecord<String, Object> cr = KafkaTestUtils.getSingleRecord(consumer, CLOUD_STREAM_OUTPUT_TOPIC, 3000);
+
+        System.out.println("ConsumerRecord : " + cr.value());
+        assertThat(cr.value(), is("FOO"));
     }
 }

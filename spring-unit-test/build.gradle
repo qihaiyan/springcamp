@@ -4,7 +4,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation "org.springframework.cloud:spring-cloud-stream-binder-kafka"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation "org.springframework.kafka:spring-kafka-test"
     testImplementation 'org.junit.vintage:junit-vintage-engine'
     testImplementation 'com.h2database:h2'
     testImplementation 'com.github.fppt:jedis-mock:0.1.16'

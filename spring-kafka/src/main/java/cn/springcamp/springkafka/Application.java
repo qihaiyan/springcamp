@@ -16,7 +16,7 @@ public class Application {
     }
 
     @Bean
-    public Function<String, String> handle() {
+    public Function<String, Object> handle() {
         return String::toUpperCase;
     }
 }
