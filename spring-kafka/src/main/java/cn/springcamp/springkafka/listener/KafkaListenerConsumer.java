@@ -1,4 +1,4 @@
-package cn.springcamp.springkafka;
+package cn.springcamp.springkafka.listener;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Data
 @Component
-public class KafkaConsumer {
+public class KafkaListenerConsumer {
 
     private String payload;
 

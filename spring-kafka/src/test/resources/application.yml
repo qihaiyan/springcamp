@@ -4,7 +4,6 @@ spring:
     handle-in-0.destination: testEmbeddedIn
     handle-in-0.group: utgroup
   kafka:
-#    bootstrap-servers: localhost:9093
     consumer:
       group-id: utgroup
       auto-offset-reset: earliest

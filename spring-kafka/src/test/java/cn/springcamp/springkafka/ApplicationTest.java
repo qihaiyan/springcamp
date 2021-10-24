@@ -1,5 +1,7 @@
 package cn.springcamp.springkafka;
 
+import cn.springcamp.springkafka.container.MessageListenerContainerConsumer;
+import cn.springcamp.springkafka.listener.KafkaListenerConsumer;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -17,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Map;
 
+import static cn.springcamp.springkafka.container.MessageListenerContainerConsumer.LISTENER_CONTAINER_TOPIC;
 import static org.awaitility.Awaitility.await;
 
 @RunWith(SpringRunner.class)
@@ -41,9 +44,11 @@ public class ApplicationTest {
     @Autowired
     private TestRestTemplate testRestTemplate;
     @Autowired
-    private KafkaConsumer kafkaConsumer;
+    private KafkaListenerConsumer kafkaListenerConsumer;
     @Autowired
     private KafkaProducer kafkaProducer;
+    @Autowired
+    private MessageListenerContainerConsumer messageListenerContainerConsumer;
 
     @Before
     public void before() {
@@ -72,12 +77,14 @@ public class ApplicationTest {
     }
 
     @Test
-    public void testKafkaSendReceive() {
+    public void testKafkaLisenerSendReceive() {
         kafkaProducer.send(KAFKA_LISTENER_TOPIC, "foo");
-        await().until(() -> "foo".equals(kafkaConsumer.getPayload()));
-//        kafkaTemplate.send(KAFKA_LISTENER_TOPIC, "foo");
-//        ConsumerRecord<String, String> cr = KafkaTestUtils.getSingleRecord(consumer, KAFKA_LISTENER_TOPIC, 3000);
-//        System.out.println("ConsumerRecord : " + cr.value());
-//        assertThat(cr.value(), is("FOO"));
+        await().until(() -> "foo".equals(kafkaListenerConsumer.getPayload()));
+    }
+
+    @Test
+    public void testKafkaListenerContainer() {
+        kafkaProducer.send(LISTENER_CONTAINER_TOPIC, "foo");
+        await().until(() -> messageListenerContainerConsumer.consumedMessages.contains("foo"));
     }
 }
