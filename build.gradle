@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.4.5'
+        springBootVersion = '2.5.8'
     }
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
@@ -27,6 +27,9 @@ subprojects {
         compileOnly {
             extendsFrom annotationProcessor
         }
+        testCompileOnly {
+            extendsFrom testAnnotationProcessor
+        }
     }
 
     repositories {
@@ -37,9 +40,8 @@ subprojects {
 
     dependencies {
         implementation('org.springframework.boot:spring-boot-starter')
-        compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
         testImplementation('org.springframework.boot:spring-boot-starter-test')
     }
-
 }
