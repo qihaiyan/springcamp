@@ -4,5 +4,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-cbor'
-	testImplementation 'com.github.fppt:jedis-mock:0.1.16'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.vintage:junit-vintage-engine'
+	testImplementation 'com.github.fppt:jedis-mock:1.0.1'
 }

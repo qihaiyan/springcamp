@@ -11,4 +11,5 @@ include 'spring-unit-test'
 include 'spring-groovy'
 include 'spring-easy-rule'
 include 'spring-kafka'
+include 'spring-redis-resolver'
 

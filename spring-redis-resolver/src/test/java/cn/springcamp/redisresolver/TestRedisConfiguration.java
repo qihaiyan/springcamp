@@ -1,4 +1,4 @@
-package cn.springcamp.springboot.unit.test;
+package cn.springcamp.redisresolver;
 
 import com.github.fppt.jedismock.RedisServer;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +13,7 @@ public class TestRedisConfiguration {
 
     private final RedisServer redisServer;
 
-    public TestRedisConfiguration(@Value("${spring.redis.port}") final int redisPort) throws IOException {
+    public TestRedisConfiguration(@Value("${spring.redis.port}") final int redisPort) {
         redisServer = RedisServer.newRedisServer(redisPort);
     }
 
