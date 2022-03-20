@@ -26,6 +26,9 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.client.match.MockRestRequestMatchers;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -109,6 +112,8 @@ public class DemoApplicationTest {
     public void testDbCallRest() {
         MyDomain myDomain = new MyDomain();
         myDomain.setName("test");
+        LocalDateTime now = LocalDateTime.now();
+        myDomain.setCreateTime(now);
         myDomain = myDomainRepository.save(myDomain);
         MyDomain resp = testRestTemplate.getForObject("/db?id=" + myDomain.getId(), MyDomain.class);
         System.out.println("db result : " + resp);
@@ -119,6 +124,16 @@ public class DemoApplicationTest {
         });
         System.out.println("dbpage result : " + pageResp);
         assertThat(pageResp.getBody().getTotalElements(), is(1L));
+        assertThat(pageResp.getBody().get().findFirst().map(d -> d.getCreateTime().atZone(ZoneId.systemDefault()).toInstant().getEpochSecond()).orElse(Instant.now().getEpochSecond()), is(now.atZone(ZoneId.systemDefault()).toInstant().getEpochSecond()));
+
+        String strResp = testRestTemplate.getForObject("/dbpage", String.class);
+        System.out.println("dbpage strResp : " + strResp);
+        assertThat(strResp.contains(String.valueOf(now.atZone(ZoneId.systemDefault()).toInstant().getEpochSecond())), is(true));
+
+        ResponseEntity<TestRestResponseSlice<MyDomain>> sliceResp = testRestTemplate.exchange(requestEntity, new ParameterizedTypeReference<TestRestResponseSlice<MyDomain>>() {
+        });
+        System.out.println("dbpage result : " + pageResp);
+        assertThat(sliceResp.getBody().getNumberOfElements(), is(1));
     }
 
     @Test
