@@ -5,14 +5,11 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-stream-binder-kafka"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "org.springframework.kafka:spring-kafka-test"
-    testImplementation 'org.junit.vintage:junit-vintage-engine'
-    testImplementation 'com.h2database:h2'
-    testImplementation 'com.github.fppt:jedis-mock:1.0.1'
 }
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR10"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2020.0.4"
     }
 }
 

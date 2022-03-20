@@ -4,6 +4,8 @@ import cn.springcamp.springboot.unit.test.data.MyDomain;
 import cn.springcamp.springboot.unit.test.data.MyDomainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,6 +23,10 @@ public class MyService {
 
     public MyDomain dbFunc(Long id) {
         return myDomainRepository.findById(id).orElse(new MyDomain());
+    }
+
+    public Page<MyDomain> dbPageFunc(Pageable pageable) {
+        return myDomainRepository.findAll(pageable);
     }
 
     public String callRemote() {

@@ -10,7 +10,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -110,6 +113,12 @@ public class DemoApplicationTest {
         MyDomain resp = testRestTemplate.getForObject("/db?id=" + myDomain.getId(), MyDomain.class);
         System.out.println("db result : " + resp);
         assertThat(resp.getName(), is("test"));
+
+        RequestEntity<Void> requestEntity = RequestEntity.get("/dbpage").build();
+        ResponseEntity<TestRestResponsePage<MyDomain>> pageResp = testRestTemplate.exchange(requestEntity, new ParameterizedTypeReference<TestRestResponsePage<MyDomain>>() {
+        });
+        System.out.println("dbpage result : " + pageResp);
+        assertThat(pageResp.getBody().getTotalElements(), is(1L));
     }
 
     @Test
