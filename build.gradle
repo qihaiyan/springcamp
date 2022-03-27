@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.5.8'
+        springBootVersion = '2.6.5'
     }
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
@@ -12,7 +12,6 @@ buildscript {
 
 group = 'cn.springcamp'
 version = '0.0.1-SNAPSHOT'
-
 
 subprojects {
 
