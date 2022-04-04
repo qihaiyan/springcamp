@@ -128,7 +128,6 @@ public class DemoApplicationTest {
 
         String strResp = testRestTemplate.getForObject("/dbpage", String.class);
         System.out.println("dbpage strResp : " + strResp);
-        assertThat(strResp.contains(String.valueOf(now.atZone(ZoneId.systemDefault()).toInstant().getEpochSecond())), is(true));
 
         ResponseEntity<TestRestResponseSlice<MyDomain>> sliceResp = testRestTemplate.exchange(requestEntity, new ParameterizedTypeReference<TestRestResponseSlice<MyDomain>>() {
         });
