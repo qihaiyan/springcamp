@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        set('springBootVersion', "2.6.6")
+        set('springBootVersion', "2.6.7")
     }
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
