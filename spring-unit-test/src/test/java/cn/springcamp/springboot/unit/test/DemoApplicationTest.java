@@ -2,6 +2,7 @@ package cn.springcamp.springboot.unit.test;
 
 import cn.springcamp.springboot.unit.test.data.MyDomain;
 import cn.springcamp.springboot.unit.test.data.MyDomainRepository;
+import cn.springcamp.springboot.unit.test.service.MyService;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.hamcrest.Matchers;
@@ -22,6 +23,7 @@ import org.springframework.kafka.test.rule.EmbeddedKafkaRule;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.client.match.MockRestRequestMatchers;
 import org.springframework.web.client.RestTemplate;
@@ -61,6 +63,8 @@ public class DemoApplicationTest {
     private RestTemplate restTemplate;
     @Autowired
     private MyDomainRepository myDomainRepository;
+    @Autowired
+    private MyService myService;
 
     private MockRestServiceServer mockRestServiceServer;
 
@@ -143,5 +147,12 @@ public class DemoApplicationTest {
 
         System.out.println("ConsumerRecord : " + cr.value());
         assertThat(cr.value(), is("FOO"));
+    }
+
+    @Test
+    public void reflectionTestUtilsTest() {
+        assertThat(myService.getOriginValue(), is("origin"));
+        ReflectionTestUtils.setField(myService, "originValue", "test");
+        assertThat(myService.getOriginValue(), is("test"));
     }
 }
