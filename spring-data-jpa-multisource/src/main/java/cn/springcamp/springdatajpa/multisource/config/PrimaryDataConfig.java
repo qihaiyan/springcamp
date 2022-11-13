@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +26,8 @@ import javax.persistence.EntityManagerFactory;
         basePackages = {"cn.springcamp.springdatajpa.multisource.primary.data"}
 )
 public class PrimaryDataConfig {
+    @Autowired
+    private JpaProperties jpaProperties;
 
     @Bean
     @Primary
@@ -49,7 +50,7 @@ public class PrimaryDataConfig {
         return builder
                 .dataSource(primaryDataSource())
                 .packages("cn.springcamp.springdatajpa.multisource.primary.data")
-//                .properties(primaryJpaProperties().getProperties())
+                .properties(jpaProperties.getProperties())
                 .persistenceUnit("primary")
                 .build();
     }

@@ -7,5 +7,7 @@ dependencies {
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-cbor'
 	implementation "mysql:mysql-connector-java"
 	implementation 'com.h2database:h2'
-	testImplementation("com.h2database:h2")
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.vintage:junit-vintage-engine'
+	testImplementation "com.h2database:h2"
 }

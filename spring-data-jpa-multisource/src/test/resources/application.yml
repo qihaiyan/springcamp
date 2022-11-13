@@ -44,7 +44,6 @@ other:
         useServerPrepStmts: true
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-#    database: mysql
     show-sql: true
     generate-ddl: true
     properties:
