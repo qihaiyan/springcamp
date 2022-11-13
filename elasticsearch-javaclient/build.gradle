@@ -1,10 +1,10 @@
 dependencies {
-    implementation 'co.elastic.clients:elasticsearch-java:8.1.2'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
+    implementation 'co.elastic.clients:elasticsearch-java:8.5.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
 
     // Needed only if you use the spring-dependency-management
     // and spring-boot Gradle plugins
-    implementation 'jakarta.json:jakarta.json-api:2.1.0'
+    implementation 'jakarta.json:jakarta.json-api:2.1.1'
 }
 
 test {
