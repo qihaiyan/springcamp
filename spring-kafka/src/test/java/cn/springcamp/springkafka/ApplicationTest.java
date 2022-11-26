@@ -18,6 +18,7 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.Duration;
 import java.util.Map;
 
 import static cn.springcamp.springkafka.container.MessageListenerContainerConsumer.LISTENER_CONTAINER_TOPIC;
@@ -53,10 +54,6 @@ public class ApplicationTest {
     @Autowired
     private MessageListenerContainerConsumer messageListenerContainerConsumer;
 
-    @Before
-    public void before() {
-    }
-
     @BeforeClass
     public static void setup() {
         System.setProperty("spring.cloud.stream.kafka.binder.brokers", embeddedKafka.getBrokersAsString());
@@ -79,6 +76,10 @@ public class ApplicationTest {
         }
     }
 
+    @Before
+    public void before() {
+    }
+
     @Test
     public void testKafkaLisener() {
         kafkaProducer.send(KAFKA_LISTENER_TOPIC, "foo");
@@ -95,7 +96,7 @@ public class ApplicationTest {
     public void testCloudStream() {
         kafkaTemplate.send(CLOUD_STREAM_INPUT_TOPIC, "foo");
 
-        ConsumerRecord<String, Object> cr = KafkaTestUtils.getSingleRecord(consumer, CLOUD_STREAM_OUTPUT_TOPIC, 3000);
+        ConsumerRecord<String, Object> cr = KafkaTestUtils.getSingleRecord(consumer, CLOUD_STREAM_OUTPUT_TOPIC, Duration.ofMillis(3000));
 
         System.out.println("ConsumerRecord : " + cr.value());
         assertThat(cr.value(), is("FOO"));

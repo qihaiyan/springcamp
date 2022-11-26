@@ -1,6 +1,7 @@
 package cn.springcamp.springdatajpa.multisource.other.data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 
 @Entity
@@ -17,7 +18,7 @@ public class Other implements Serializable {
         return this.id;
     }
 
-    public void setId(Long id){
+    public void setId(Long id) {
         this.id = id;
     }
 

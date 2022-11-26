@@ -1,11 +1,11 @@
 package cn.springcamp.springboot.unit.test;
 
 import com.github.fppt.jedismock.RedisServer;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.io.IOException;
 
 @TestConfiguration

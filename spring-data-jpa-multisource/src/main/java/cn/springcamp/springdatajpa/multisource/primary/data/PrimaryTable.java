@@ -1,12 +1,15 @@
 package cn.springcamp.springdatajpa.multisource.primary.data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
+import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "demo")
 public class PrimaryTable implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -15,7 +18,7 @@ public class PrimaryTable implements Serializable {
 
     private String name;
 
-    public PrimaryTable(){
+    public PrimaryTable() {
 
     }
 
@@ -23,7 +26,7 @@ public class PrimaryTable implements Serializable {
         return this.id;
     }
 
-    public void setId(Long id){
+    public void setId(Long id) {
         this.id = id;
     }
 

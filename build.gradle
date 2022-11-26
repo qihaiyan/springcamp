@@ -1,9 +1,9 @@
 buildscript {
     ext {
-        set('springBootVersion', "2.7.5")
+        set('springBootVersion', "3.0.0")
     }
     repositories {
-        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://maven.aliyun.com/repository/public/" }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")

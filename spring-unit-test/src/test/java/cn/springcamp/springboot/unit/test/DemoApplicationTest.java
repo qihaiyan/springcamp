@@ -28,6 +28,7 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.client.match.MockRestRequestMatchers;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -143,7 +144,7 @@ public class DemoApplicationTest {
     public void testKafkaSendReceive() {
         kafkaTemplate.send(INPUT_TOPIC, "foo");
 
-        ConsumerRecord<String, String> cr = KafkaTestUtils.getSingleRecord(consumer, OUTPUT_TOPIC, 3000);
+        ConsumerRecord<String, String> cr = KafkaTestUtils.getSingleRecord(consumer, OUTPUT_TOPIC, Duration.ofMillis(3000));
 
         System.out.println("ConsumerRecord : " + cr.value());
         assertThat(cr.value(), is("FOO"));
