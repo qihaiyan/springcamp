@@ -1,3 +1,10 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
 rootProject.name = 'springcamp'
 
 include 'spring-data-jpa-multisource'
@@ -14,4 +21,4 @@ include 'spring-kafka'
 include 'spring-redis-resolver'
 include 'spring-localdatetime-epoch'
 include 'elasticsearch-javaclient'
-
+include 'spring-native'

@@ -3,7 +3,8 @@ buildscript {
         set('springBootVersion', "3.0.0")
     }
     repositories {
-        maven { url "https://maven.aliyun.com/repository/public/" }
+        maven { url "https://plugins.gradle.org/m2/" }
+//        maven { url "https://maven.aliyun.com/repository/public/" }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -14,7 +15,6 @@ group = 'cn.springcamp'
 version = '0.0.1-SNAPSHOT'
 
 subprojects {
-
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
