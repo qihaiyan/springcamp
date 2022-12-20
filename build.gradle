@@ -4,7 +4,6 @@ buildscript {
     }
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
-//        maven { url "https://maven.aliyun.com/repository/public/" }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
