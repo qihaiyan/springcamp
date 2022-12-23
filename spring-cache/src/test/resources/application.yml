@@ -1,7 +1,3 @@
 spring:
-  cache:
-    redis:
-      time-to-live: 600000
   redis:
-    host: localhost
     port: 10333

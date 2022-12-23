@@ -13,7 +13,7 @@ public class TestRedisConfiguration {
 
     private final RedisServer redisServer;
 
-    public TestRedisConfiguration(@Value("${spring.redis.port}") final int redisPort) throws IOException {
+    public TestRedisConfiguration(@Value("${spring.redis.port}") final int redisPort) {
         redisServer = RedisServer.newRedisServer(redisPort);
     }
 
