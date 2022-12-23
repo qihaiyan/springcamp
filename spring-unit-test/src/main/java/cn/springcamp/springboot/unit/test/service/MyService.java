@@ -21,7 +21,7 @@ public class MyService {
     @Autowired
     private MyDomainRepository myDomainRepository;
 
-    @Cacheable
+    @Cacheable(cacheNames = "redis")
     public String cacheFunc() {
         return "ok";
     }

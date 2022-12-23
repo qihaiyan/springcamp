@@ -1,3 +1,4 @@
 spring:
-  redis:
-    port: 10333
+  data:
+    redis:
+      port: 10333

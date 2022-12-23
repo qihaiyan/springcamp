@@ -2,7 +2,8 @@ spring:
   cache:
     redis:
       time-to-live: 600000
-  redis:
-    host: localhost
-    port: 6379
-    password:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
