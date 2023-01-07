@@ -15,7 +15,6 @@ spring:
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     open-in-view: false
     # do not use this in production environment
@@ -25,6 +24,8 @@ spring:
         id.new_generator_mappings: true
         # do not use this in production environment
         hbm2ddl.auto: create-drop
+        physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
 
 other:
   datasource:
@@ -43,12 +44,14 @@ other:
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-#    database: mysql
     show-sql: true
+    # do not use this in production environment
     generate-ddl: true
     properties:
       hibernate:
         id.new_generator_mappings: true
+        # do not use this in production environment
         hbm2ddl.auto: create-drop
+        physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
 
