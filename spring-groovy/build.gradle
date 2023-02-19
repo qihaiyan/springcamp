@@ -1,5 +1,5 @@
 dependencies {
-    implementation 'org.codehaus.groovy:groovy:3.0.8'
+    implementation 'org.apache.groovy:groovy'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.vintage:junit-vintage-engine'
     testImplementation 'com.h2database:h2'
