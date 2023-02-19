@@ -22,3 +22,5 @@ include 'spring-redis-resolver'
 include 'spring-localdatetime-epoch'
 include 'elasticsearch-javaclient'
 include 'spring-native'
+include 'spring-cloud-gateway'
+

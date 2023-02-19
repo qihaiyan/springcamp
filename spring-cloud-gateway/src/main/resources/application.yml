@@ -1,0 +1,20 @@
+spring:
+  r2dbc:
+    url: r2dbc:h2:mem:///testdb?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+  cloud:
+    gateway:
+      routes:
+        - id: routeOne
+          predicates:
+            - Path=/route1/**
+          uri: no://op
+          filters:
+            - UriHostPlaceholderFilter=10001
+        - id: routeTwo
+          predicates:
+            - Path=/route2/**
+          uri: no://op
+          filters:
+            - UriHostPlaceholderFilter=10001
