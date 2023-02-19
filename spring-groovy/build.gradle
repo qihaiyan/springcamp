@@ -1,5 +1,6 @@
 dependencies {
     implementation 'org.apache.groovy:groovy'
+    implementation 'org.apache.groovy:groovy-jsr223'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.vintage:junit-vintage-engine'
     testImplementation 'com.h2database:h2'
