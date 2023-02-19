@@ -21,7 +21,7 @@ public class ApplicationTest {
 
     @Test
     public void testRoute() {
-        ResponseEntity<String> resp = testRestTemplate.exchange(RequestEntity.get("/route1/test").header("code", "alpha").build(), String.class);
+        ResponseEntity<String> resp = testRestTemplate.exchange(RequestEntity.get("/route1/test?a=test").header("code", "alpha").build(), String.class);
         log.info("resp for route1: {}", resp);
     }
 }
