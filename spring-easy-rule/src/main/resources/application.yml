@@ -1,3 +1,4 @@
+spring.main.allow-circular-references: true
 rule:
   skip-on-first-failed-rule: true
   skip-on-first-applied-rule: false
