@@ -5,7 +5,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-json'
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-cbor'
-	implementation "mysql:mysql-connector-java"
+	implementation "com.mysql:mysql-connector-j"
 	implementation 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.vintage:junit-vintage-engine'
