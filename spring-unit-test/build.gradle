@@ -4,6 +4,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation "org.springframework.cloud:spring-cloud-stream-binder-kafka"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.vintage:junit-vintage-engine'
     testImplementation "org.springframework.kafka:spring-kafka-test"
 }
 

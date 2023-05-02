@@ -1,14 +1,10 @@
-plugins {
-    id 'org.graalvm.buildtools.native' version '0.9.18'
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.apache.httpcomponents.client5:httpclient5'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.vintage:junit-vintage-engine'
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }

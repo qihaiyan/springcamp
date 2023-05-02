@@ -21,7 +21,7 @@ public class ApplicationTest {
     @Test
     public void testHello() {
         String resp = testRestTemplate.getForObject("/hello", String.class);
-        log.info("hello result : {}" + resp);
+        log.info("hello result : {}", resp);
         assertThat(resp, is("{\"id\":1}"));
     }
 }

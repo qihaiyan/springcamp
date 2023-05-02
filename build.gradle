@@ -40,7 +40,7 @@ subprojects {
         implementation('org.springframework.boot:spring-boot-starter')
         annotationProcessor 'org.projectlombok:lombok'
         testAnnotationProcessor 'org.projectlombok:lombok'
-        testImplementation('org.springframework.boot:spring-boot-starter-test')
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testImplementation 'org.junit.vintage:junit-vintage-engine'
         testImplementation 'com.h2database:h2'
         testImplementation 'com.github.fppt:jedis-mock:1.0.1'
