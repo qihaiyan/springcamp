@@ -52,11 +52,8 @@ public class RestTemplateConfig {
         // set maximum amount of connections for each http route in pool
         poolingConnectionManager.setDefaultMaxPerRoute(200);
 
-        // Defines period of inactivity in milliseconds after which persistent connections must be re-validated
-        poolingConnectionManager.setValidateAfterInactivity(TimeValue.ofSeconds(10));
-
         RequestConfig requestConfig = RequestConfig.custom()
-                .setConnectTimeout(Timeout.ofSeconds(2))
+                .setConnectionKeepAlive(TimeValue.ofSeconds(10))
                 .setConnectionRequestTimeout(Timeout.ofSeconds(2))
                 .setResponseTimeout(Timeout.ofSeconds(2))
                 .build();

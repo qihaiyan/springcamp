@@ -7,5 +7,5 @@ dependencies {
 	implementation 'com.github.ben-manes.caffeine:caffeine'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.vintage:junit-vintage-engine'
-	testImplementation 'com.github.fppt:jedis-mock:1.0.1'
+	testImplementation 'com.github.fppt:jedis-mock:1.0.7'
 }
