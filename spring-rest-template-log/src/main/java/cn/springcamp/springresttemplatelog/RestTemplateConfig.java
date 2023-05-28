@@ -1,6 +1,7 @@
 package cn.springcamp.springresttemplatelog;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.client5.http.config.ConnectionConfig;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.DefaultConnectionKeepAliveStrategy;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -46,9 +47,10 @@ public class RestTemplateConfig {
         PoolingHttpClientConnectionManager poolingConnectionManager = new PoolingHttpClientConnectionManager(registry);
 
         poolingConnectionManager.setDefaultSocketConfig(SocketConfig.custom().setSoTimeout(Timeout.ofSeconds(2)).build());
+        poolingConnectionManager.setDefaultConnectionConfig(ConnectionConfig.custom().setConnectTimeout(Timeout.ofSeconds(2)).build());
+
         // set total amount of connections across all HTTP routes
         poolingConnectionManager.setMaxTotal(200);
-
         // set maximum amount of connections for each http route in pool
         poolingConnectionManager.setDefaultMaxPerRoute(200);
 
