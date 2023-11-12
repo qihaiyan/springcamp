@@ -6,11 +6,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class DbService {
     @Autowired
-    private TestDataRepository testDataRepository;
+    private DemoDataRepository demoDataRepository;
 
     public DemoData hello() {
         DemoData demoData = new DemoData();
-        demoData = testDataRepository.save(demoData);
+        demoData.setName("test");
+        demoData = demoDataRepository.save(demoData);
+        demoDataRepository.insert0(demoData);
+        demoDataRepository.insert1(demoData);
         return demoData;
     }
 }
