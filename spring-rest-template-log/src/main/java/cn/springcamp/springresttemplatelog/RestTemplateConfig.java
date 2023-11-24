@@ -111,11 +111,6 @@ public class RestTemplateConfig {
         }
 
         @NonNull
-        public int getRawStatusCode() throws IOException {
-            return this.response.getStatusCode().value();
-        }
-
-        @NonNull
         public String getStatusText() throws IOException {
             return this.response.getStatusText();
         }

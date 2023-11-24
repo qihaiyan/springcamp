@@ -33,7 +33,7 @@ public class DemoApplicationTest {
         mockRestServiceServer = MockRestServiceServer.bindTo(restTemplate).ignoreExpectOrder(true).build();
 
         this.mockRestServiceServer.expect(manyTimes(), MockRestRequestMatchers.requestTo(Matchers.startsWithIgnoringCase("http://someservice/foo")))
-                .andRespond(withSuccess("{\"code\": 200}", MediaType.APPLICATION_JSON));
+                .andRespond(withSuccess("{\"code\": \"200\"}", MediaType.APPLICATION_JSON));
 
     }
 
@@ -41,14 +41,5 @@ public class DemoApplicationTest {
     public void testGet() {
         String resp = testRestTemplate.getForObject("/demo/get?arg=test", String.class);
         log.info("rest: {}", resp);
-//                .andDo(print()).andExpect(status().isOk());
-//        this.mockMvc.perform(post("/demo/post/form")
-//                        .content(new ObjectMapper().writeValueAsString(new DemoController.BodyRequest("test")))
-//                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-//                .andDo(print()).andExpect(status().isOk());
-//        this.mockMvc.perform(post("/demo/post/body")
-//                        .content(new ObjectMapper().writeValueAsString(new DemoController.BodyRequest("test")))
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andDo(print()).andExpect(status().isOk());
     }
 }
