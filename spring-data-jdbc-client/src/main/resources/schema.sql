@@ -1,0 +1,1 @@
+create table my_data(id integer, name varchar(255));

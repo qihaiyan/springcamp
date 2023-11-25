@@ -26,4 +26,5 @@ include 'spring-cloud-gateway'
 include 'spring-rest-template-log'
 include 'json-utils'
 include 'spring-data-envers-conditional'
+include 'spring-data-jdbc-client'
 
