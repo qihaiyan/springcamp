@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 @Slf4j
 @Component
@@ -27,9 +28,9 @@ public class MyEngine {
     }
 
     public void runScript(int x, int y) throws IllegalAccessException,
-            InstantiationException, ResourceException, ScriptException {
+            InstantiationException, ResourceException, ScriptException, NoSuchMethodException, InvocationTargetException {
         Class<GroovyObject> calcClass = engine.loadScriptByName("CalcScript.groovy");
-        GroovyObject calc = calcClass.newInstance();
+        GroovyObject calc = calcClass.getDeclaredConstructor().newInstance();
 
         Object result = calc.invokeMethod("calcSum", new Object[]{x, y});
         System.out.println("Result of CalcScript.calcSum() method is " + result);

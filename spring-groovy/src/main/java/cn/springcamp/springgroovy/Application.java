@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ImportResource;
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import java.lang.reflect.InvocationTargetException;
 
 @SpringBootApplication
 @ImportResource({"classpath:xml-bean-config.xml", "classpath:BeanBuilder.groovy"})
@@ -28,7 +29,7 @@ public class Application implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws ScriptException, ResourceException, IllegalAccessException, InstantiationException, javax.script.ScriptException, NoSuchMethodException {
+    public void run(String... args) throws ScriptException, ResourceException, IllegalAccessException, InstantiationException, javax.script.ScriptException, NoSuchMethodException, InvocationTargetException {
         MyDomain myDomain = new MyDomain();
         myDomain.setName("test");
         System.out.println(myServiceXml.fun(myDomain));

@@ -4,7 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.function.Function;
@@ -23,7 +22,6 @@ public class Application {
 
     @Bean
     public Function<String, String> handle() {
-        Assert.hasText("11");
         return String::toUpperCase;
     }
 }

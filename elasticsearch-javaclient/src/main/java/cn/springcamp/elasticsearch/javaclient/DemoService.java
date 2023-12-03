@@ -93,7 +93,7 @@ public class DemoService {
                 ));
         SearchResponse<DemoDomain> search = elasticsearchClient.search(searchRequest, DemoDomain.class);
         if (search != null) {
-            search.hits().hits().forEach(record -> {
+            search.hits().hits().stream().filter(record -> record.source() != null).forEach(record -> {
                 DeleteRequest deleteRequest = DeleteRequest.of(s -> s
                         .index(MY_INDEX)
                         .id(record.source().getId()));
