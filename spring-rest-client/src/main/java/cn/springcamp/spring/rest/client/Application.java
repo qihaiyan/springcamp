@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClient;
 
+import java.util.List;
+
 @Slf4j
 @SpringBootApplication
 @RestController
@@ -19,10 +21,11 @@ public class Application {
 
     @GetMapping("/demo/list")
     public Object requestList() {
-        return restClient.get()
+        List<String> list = restClient.get()
                 .uri("http://someservice/list")
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {});
+        return list;
     }
 
     public static void main(String[] args) {
