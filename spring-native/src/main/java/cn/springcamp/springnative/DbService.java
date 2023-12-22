@@ -12,8 +12,7 @@ public class DbService {
         DemoData demoData = new DemoData();
         demoData.setName("test");
         demoData = demoDataRepository.save(demoData);
-        demoDataRepository.insert0(demoData);
-        demoDataRepository.insert1(demoData);
+        demoDataRepository.insert(demoData);
         return demoData;
     }
 }

@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:test;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+#  jpa:
+#    database-platform: org.hibernate.dialect.H2Dialect
+#    show-sql: true
+#    open-in-view: false
+#    # do not use this in production environment
+#    generate-ddl: true
+#    properties:
+#      hibernate:
+#        id.new_generator_mappings: true
+#        # do not use this in production environment
+#        hbm2ddl.auto: create-drop
