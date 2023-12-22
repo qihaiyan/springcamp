@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        set('springBootVersion', "3.2.0")
+        set('springBootVersion', "3.2.1")
     }
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
@@ -20,6 +20,10 @@ subprojects {
 
     sourceCompatibility = 17
     targetCompatibility = 17
+
+    tasks.withType(JavaCompile).configureEach {
+        options.compilerArgs.add("-parameters")
+    }
 
     configurations {
         compileOnly {
