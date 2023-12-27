@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.MockServerRestClientCustomizer;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -30,11 +29,8 @@ public class DemoApplicationTest {
     private TestRestTemplate testRestTemplate;
     @Autowired
     private RestTemplate restTemplate;
-    @Autowired
-    private MyService myService;
 
     private MockRestServiceServer mockRestServiceServer;
-    private MockServerRestClientCustomizer mockServerRestClientCustomizer;
 
     @Before
     public void before() {
