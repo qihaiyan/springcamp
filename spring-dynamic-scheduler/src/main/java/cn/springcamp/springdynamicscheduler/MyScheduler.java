@@ -36,7 +36,6 @@ public class MyScheduler implements SchedulingConfigurer {
     }
 
     public void registerTask(TaskData taskData) {
-//        CronTask task = new CronTask(runnable, "0/1 * * * * ?");
         //如果配置一致，则不需要重新创建定时任务
         if (scheduledFutures.containsKey(taskData.getId())
                 && cronTasks.get(taskData.getId()).getExpression().equals(taskData.getExpression())) {
