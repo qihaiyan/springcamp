@@ -1,6 +1,8 @@
 package cn.springcamp.springresttemplatelog;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.client5.http.DnsResolver;
+import org.apache.hc.client5.http.SystemDefaultDnsResolver;
 import org.apache.hc.client5.http.config.ConnectionConfig;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.DefaultConnectionKeepAliveStrategy;
@@ -13,6 +15,8 @@ import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
 import org.apache.hc.core5.http.config.Registry;
 import org.apache.hc.core5.http.config.RegistryBuilder;
 import org.apache.hc.core5.http.io.SocketConfig;
+import org.apache.hc.core5.pool.PoolConcurrencyPolicy;
+import org.apache.hc.core5.pool.PoolReusePolicy;
 import org.apache.hc.core5.util.TimeValue;
 import org.apache.hc.core5.util.Timeout;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -33,7 +37,13 @@ import org.springframework.web.client.RestTemplate;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 @Configuration
 public class RestTemplateConfig {
@@ -44,7 +54,14 @@ public class RestTemplateConfig {
                         .register("http", PlainConnectionSocketFactory.getSocketFactory())
                         .register("https", SSLConnectionSocketFactory.getSocketFactory())
                         .build();
-        PoolingHttpClientConnectionManager poolingConnectionManager = new PoolingHttpClientConnectionManager(registry);
+        PoolingHttpClientConnectionManager poolingConnectionManager = new PoolingHttpClientConnectionManager(
+                registry,
+                PoolConcurrencyPolicy.STRICT,
+                PoolReusePolicy.LIFO,
+                TimeValue.NEG_ONE_MILLISECOND,
+                null,
+                new CustomDnsResolver(2),
+                null);
 
         poolingConnectionManager.setDefaultSocketConfig(SocketConfig.custom().setSoTimeout(Timeout.ofSeconds(2)).build());
         poolingConnectionManager.setDefaultConnectionConfig(ConnectionConfig.custom().setConnectTimeout(Timeout.ofSeconds(2)).build());
@@ -130,6 +147,37 @@ public class RestTemplateConfig {
 
         public void close() {
             this.response.close();
+        }
+    }
+
+    public static class CustomDnsResolver implements DnsResolver {
+
+        private final DnsResolver systemDnsResolver;
+        private final Integer connectTimeout;
+
+        public CustomDnsResolver(Integer connectTimeout) {
+            this.systemDnsResolver = SystemDefaultDnsResolver.INSTANCE;
+            this.connectTimeout = connectTimeout;
+        }
+
+        @Override
+        public InetAddress[] resolve(final String host) {
+            try {
+                return CompletableFuture.supplyAsync(() -> {
+                    try {
+                        return systemDnsResolver.resolve(host);
+                    } catch (UnknownHostException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).get(connectTimeout, TimeUnit.SECONDS);
+            } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override
+        public String resolveCanonicalHostname(String host) throws UnknownHostException {
+            return systemDnsResolver.resolveCanonicalHostname(host);
         }
     }
 }
