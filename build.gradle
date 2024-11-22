@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        set('springBootVersion', "3.2.3")
+        set('springBootVersion', "3.3.6")
     }
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
@@ -47,6 +47,6 @@ subprojects {
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testImplementation 'org.junit.vintage:junit-vintage-engine'
         testImplementation 'com.h2database:h2'
-        testImplementation 'com.github.fppt:jedis-mock:1.0.13'
+        testImplementation 'com.github.fppt:jedis-mock:1.1.8'
     }
 }
