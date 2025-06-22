@@ -25,7 +25,6 @@ import java.util.function.Supplier;
 
 import static jakarta.servlet.DispatcherType.ERROR;
 import static jakarta.servlet.DispatcherType.FORWARD;
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @EnableWebSecurity
 @Configuration(proxyBeanMethods = false)
@@ -40,12 +39,12 @@ public class DefaultSecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(FORWARD, ERROR).permitAll()
-                        .requestMatchers("/login", "/logout").permitAll()
+                        .requestMatchers("/login").permitAll()
                         .requestMatchers("/{param}").access(myRequestAuthorizationManager)
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/login").defaultSuccessUrl("/").permitAll()
+                        .loginPage("/login").permitAll()
                 )
                 .exceptionHandling(customizer ->
                         customizer.authenticationEntryPoint(new CustomLoginUrlAuthenticationEntryPoint("/login")))
