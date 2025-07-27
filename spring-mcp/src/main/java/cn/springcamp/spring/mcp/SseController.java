@@ -1,8 +1,5 @@
-package cn.springcamp.spring.sse;
+package cn.springcamp.spring.mcp;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,11 +7,8 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.concurrent.Executors;
 
-@Slf4j
-@SpringBootApplication
 @RestController
-public class Application {
-
+public class SseController {
     @GetMapping("/sse-mock")
     public SseEmitter streamData() {
         SseEmitter emitter = new SseEmitter();
@@ -30,9 +24,5 @@ public class Application {
             }
         });
         return emitter;
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
     }
 }
