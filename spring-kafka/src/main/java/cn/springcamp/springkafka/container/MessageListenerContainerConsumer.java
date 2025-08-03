@@ -38,7 +38,7 @@ public class MessageListenerContainerConsumer {
 
     private DefaultKafkaConsumerFactory<String, String> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(
-                new HashMap<String, Object>() {
+                new HashMap<>() {
                     {
                         put(BOOTSTRAP_SERVERS_CONFIG, System.getProperty("spring.kafka.bootstrap-servers"));
                         put(GROUP_ID_CONFIG, "groupId");
