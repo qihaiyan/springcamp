@@ -17,6 +17,7 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 import org.springframework.web.util.WebUtils;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -42,14 +43,24 @@ public class AccessLogFilter extends OncePerRequestFilter {
         final HttpServletRequest requestToUse = shouldWrapRequest ? new ContentCachingRequestWrapper(request) : request;
 
         final boolean shouldWrapResponse = !(response instanceof ContentCachingResponseWrapper);
-        final HttpServletResponse responseToUse = shouldWrapResponse ? new ContentCachingResponseWrapper(response) : response;
+        final ContentCachingResponseWrapper responseToUse = shouldWrapResponse ? new ContentCachingResponseWrapper(response) : (ContentCachingResponseWrapper) response;
 
         try {
             filterChain.doFilter(requestToUse, responseToUse);
         } finally {
             doSaveAccessLog(requestToUse, responseToUse);
-            copyResponse(response);
+            String content = getResponseString(responseToUse);
+            writeResponse(responseToUse, String.format("{\"data\":%s,\"msg\":\"\",\"ret\":1}", content));
         }
+    }
+
+    private void writeResponse(ContentCachingResponseWrapper response, String responseStr) throws IOException {
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.resetBuffer();
+        PrintWriter writer = response.getWriter();
+        writer.write(responseStr);
+        copyResponse(response);
     }
 
     private void doSaveAccessLog(final HttpServletRequest request,
