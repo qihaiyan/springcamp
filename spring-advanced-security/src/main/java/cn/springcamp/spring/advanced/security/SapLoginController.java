@@ -27,7 +27,7 @@ import java.util.Map;
 
 @Slf4j
 @Controller
-public class SapCDCLoginController {
+public class SapLoginController {
     @Autowired
     private RestTemplate restTemplate;
 

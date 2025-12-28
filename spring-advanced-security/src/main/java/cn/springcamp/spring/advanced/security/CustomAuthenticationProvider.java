@@ -1,13 +1,12 @@
 package cn.springcamp.spring.advanced.security;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -15,12 +14,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Slf4j
 @Component
 public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
-
-    @PostConstruct
-    public void init() {
-        this.setUserDetailsService(customUserDetailsService);
+    public CustomAuthenticationProvider(UserDetailsService customUserDetailsService) {
+        super(customUserDetailsService);
     }
 
     @Override
