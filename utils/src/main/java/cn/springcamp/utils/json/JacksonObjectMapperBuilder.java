@@ -1,4 +1,4 @@
-package cn.springcamp.jsonutils;
+package cn.springcamp.utils.json;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

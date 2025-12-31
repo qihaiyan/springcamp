@@ -1,4 +1,4 @@
-package cn.springcamp.jsonutils;
+package cn.springcamp.utils.json;
 
 import lombok.Data;
 import org.springframework.boot.CommandLineRunner;

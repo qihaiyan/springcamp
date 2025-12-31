@@ -1,4 +1,4 @@
-package cn.springcamp.jsonutils;
+package cn.springcamp.utils.json;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
