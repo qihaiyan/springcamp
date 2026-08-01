@@ -1,5 +1,5 @@
 ext {
-	set('springAiVersion', "1.0.2")
+	set('springAiVersion', "2.0.0")
 }
 
 dependencies {
