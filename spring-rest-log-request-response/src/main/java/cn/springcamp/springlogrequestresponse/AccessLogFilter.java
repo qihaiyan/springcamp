@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -40,7 +40,7 @@ public class AccessLogFilter extends OncePerRequestFilter {
         final boolean isFirstRequest = !isAsyncDispatch(request);
 
         final boolean shouldWrapRequest = isFirstRequest && !(request instanceof ContentCachingRequestWrapper);
-        final HttpServletRequest requestToUse = shouldWrapRequest ? new ContentCachingRequestWrapper(request) : request;
+        final HttpServletRequest requestToUse = shouldWrapRequest ? new ContentCachingRequestWrapper(request, 0) : request;
 
         final boolean shouldWrapResponse = !(response instanceof ContentCachingResponseWrapper);
         final ContentCachingResponseWrapper responseToUse = shouldWrapResponse ? new ContentCachingResponseWrapper(response) : (ContentCachingResponseWrapper) response;

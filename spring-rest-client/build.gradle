@@ -1,6 +1,7 @@
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-restclient'
     implementation 'org.apache.httpcomponents.client5:httpclient5'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.junit.vintage:junit-vintage-engine'
+    testImplementation 'org.springframework.boot:spring-boot-starter-restclient-test'
 }

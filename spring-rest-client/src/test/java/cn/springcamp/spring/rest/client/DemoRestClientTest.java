@@ -2,15 +2,13 @@ package cn.springcamp.spring.rest.client;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
+import org.springframework.boot.restclient.test.autoconfigure.RestClientTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.client.match.MockRestRequestMatchers;
 import org.springframework.web.client.RestClient;
@@ -20,18 +18,17 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 @Slf4j
-@RunWith(SpringRunner.class)
 @RestClientTest()
 @Import(RestClientConfig.class)
-public class DemoRestClientTest {
+class DemoRestClientTest {
 
     @Autowired
     private RestClient restClient;
     @Autowired
     private MockRestServiceServer mockRestServiceServer;
 
-    @Before
-    public void before() {
+    @BeforeEach
+    void before() {
         this.mockRestServiceServer.expect(manyTimes(), MockRestRequestMatchers.requestTo(Matchers.startsWithIgnoringCase("http://someservice/list")))
                 .andRespond(withSuccess("{\"code\": \"200\"}", MediaType.APPLICATION_JSON));
         this.mockRestServiceServer.expect(manyTimes(), MockRestRequestMatchers.requestTo(Matchers.startsWithIgnoringCase("http://someservice/status/404")))

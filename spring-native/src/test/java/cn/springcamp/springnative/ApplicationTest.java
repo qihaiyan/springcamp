@@ -1,26 +1,30 @@
 package cn.springcamp.springnative;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.web.client.RestClient;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @Slf4j
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ApplicationTest {
-    @Autowired
-    private TestRestTemplate testRestTemplate;
+class ApplicationTest {
+    @LocalServerPort
+    private int port;
+    private RestClient restClient;
+
+    @BeforeEach
+    void before() {
+        restClient = RestClient.builder().baseUrl("http://localhost:" + port).build();
+    }
 
     @Test
-    public void testHello() {
-        String resp = testRestTemplate.getForObject("/hello", String.class);
+    void testHello() {
+        String resp = restClient.get().uri("/hello").retrieve().body(String.class);
         log.info("hello result : {}", resp);
         assertThat(resp, is("{\"id\":1,\"name\":\"test\"}"));
     }

@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        set('springBootVersion', "3.5.16")
+        set('springBootVersion', "4.1.0")
     }
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
@@ -42,8 +42,11 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok'
         testAnnotationProcessor 'org.projectlombok:lombok'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        testImplementation 'org.junit.vintage:junit-vintage-engine'
         testImplementation 'com.h2database:h2'
         testImplementation 'com.github.fppt:jedis-mock:1.1.8'
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }

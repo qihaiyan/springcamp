@@ -1,19 +1,19 @@
 package cn.springcamp.utils.json;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
 public class JsonUtils {
-    private static final Supplier<ObjectMapper> mapperBuilder = new JacksonObjectMapperBuilder();
-    private static final ObjectMapper mapper = createMapper();
+    private static final Supplier<JsonMapper> mapperBuilder = new JacksonObjectMapperBuilder();
+    private static final JsonMapper mapper = createMapper();
 
     private static final JacksonDecorator DELEGATE = new JacksonDecorator(mapper);
 
-    public static ObjectMapper createMapper() {
+    public static JsonMapper createMapper() {
         return mapperBuilder.get();
     }
 

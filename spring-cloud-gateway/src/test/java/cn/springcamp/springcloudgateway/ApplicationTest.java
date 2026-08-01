@@ -1,27 +1,32 @@
 package cn.springcamp.springcloudgateway;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;
+import org.springframework.http.HttpMethod;
+import org.springframework.test.web.reactive.server.WebTestClient;
 
 @Slf4j
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ApplicationTest {
+@AutoConfigureWebTestClient
+class ApplicationTest {
     @Autowired
-    private TestRestTemplate testRestTemplate;
+    private WebTestClient webTestClient;
     @Autowired
     private RouteFilterRepository routeFilterRepository;
+    @LocalServerPort
+    private int port;
 
     @Test
-    public void testRoute() {
-        ResponseEntity<String> resp = testRestTemplate.exchange(RequestEntity.get("/route1/test?a=test").header("code", "alpha").build(), String.class);
-        log.info("resp for route1: {}", resp);
+    void testRoute() {
+        String body = webTestClient.method(HttpMethod.GET).uri("/route1/test?a=test")
+                .header("code", "alpha")
+                .exchange()
+                .expectBody(String.class)
+                .returnResult().getResponseBody();
+        log.info("resp for route1: {}", body);
     }
 }

@@ -1,7 +1,7 @@
 package cn.springcamp.spring.advanced.security;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.util.Base64URL;
 import com.nimbusds.jwt.JWTParser;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +32,7 @@ public class SapLoginController {
     private RestTemplate restTemplate;
 
     @RequestMapping("/login/sap/cdc")
-    public String loginWithSAP(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttrs) throws JsonProcessingException {
+    public String loginWithSAP(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttrs) throws JacksonException {
         String idToken = request.getParameter("id_token");
         String jpk = restTemplate.getForObject(UriComponentsBuilder
                         .fromUriString("https://accounts.eu1.gigya.com/accounts.getJWTPublicKey")

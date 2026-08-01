@@ -2,7 +2,7 @@ package cn.springcamp.springdatajpa.multisource.primary.data;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 

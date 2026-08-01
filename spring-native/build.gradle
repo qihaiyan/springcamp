@@ -14,7 +14,7 @@ dependencies {
     implementation 'com.github.ben-manes.caffeine:caffeine'
     implementation 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.junit.vintage:junit-vintage-engine'
+    testImplementation 'org.springframework.boot:spring-boot-starter-restclient'
     testImplementation "com.h2database:h2"
 }
 

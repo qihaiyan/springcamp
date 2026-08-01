@@ -4,19 +4,20 @@ import cn.springcamp.springkafka.container.MessageListenerContainerConsumer;
 import cn.springcamp.springkafka.listener.KafkaListenerConsumer;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.junit.*;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
-import org.springframework.kafka.test.rule.EmbeddedKafkaRule;
+import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 
 import java.time.Duration;
 import java.util.Map;
@@ -26,27 +27,29 @@ import static org.awaitility.Awaitility.await;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext
-public class ApplicationTest {
+@EmbeddedKafka(
+        count = 1,
+        controlledShutdown = true,
+        topics = { "test-topic", "testEmbeddedIn", "testEmbeddedOut", "container-topic" }
+)
+class ApplicationTest {
 
     private static final String CLOUD_STREAM_INPUT_TOPIC = "testEmbeddedIn";
     private static final String CLOUD_STREAM_OUTPUT_TOPIC = "testEmbeddedOut";
     private static final String KAFKA_LISTENER_TOPIC = "test-topic";
     private static final String GROUP_NAME = "embeddedKafkaApplication";
 
-    @ClassRule
-    public static EmbeddedKafkaRule embeddedKafkaRule = new EmbeddedKafkaRule(1, true, KAFKA_LISTENER_TOPIC, CLOUD_STREAM_INPUT_TOPIC, CLOUD_STREAM_OUTPUT_TOPIC);
-
-    public static EmbeddedKafkaBroker embeddedKafka = embeddedKafkaRule.getEmbeddedKafka();
-
-    private static KafkaTemplate<String, Object> kafkaTemplate;
-
-    private static Consumer<String, Object> consumer;
+    @DynamicPropertySource
+    static void kafkaProperties(DynamicPropertyRegistry registry) {
+        // @EmbeddedKafka auto-sets spring.kafka.bootstrap-servers; point the cloud-stream binder at the same broker.
+        registry.add("spring.cloud.stream.kafka.binder.brokers", () -> System.getProperty(EmbeddedKafkaBroker.SPRING_EMBEDDED_KAFKA_BROKERS));
+    }
 
     @Autowired
-    private TestRestTemplate testRestTemplate;
+    private EmbeddedKafkaBroker embeddedKafka;
+
     @Autowired
     private KafkaListenerConsumer kafkaListenerConsumer;
     @Autowired
@@ -54,11 +57,12 @@ public class ApplicationTest {
     @Autowired
     private MessageListenerContainerConsumer messageListenerContainerConsumer;
 
-    @BeforeClass
-    public static void setup() {
-        System.setProperty("spring.cloud.stream.kafka.binder.brokers", embeddedKafka.getBrokersAsString());
-        System.setProperty("spring.kafka.bootstrap-servers", embeddedKafka.getBrokersAsString());
+    private KafkaTemplate<String, Object> kafkaTemplate;
 
+    private Consumer<String, Object> consumer;
+
+    @BeforeEach
+    void setup() {
         Map<String, Object> senderProps = KafkaTestUtils.producerProps(embeddedKafka);
         DefaultKafkaProducerFactory<String, Object> pf = new DefaultKafkaProducerFactory<>(senderProps);
         kafkaTemplate = new KafkaTemplate<>(pf, true);
@@ -69,31 +73,27 @@ public class ApplicationTest {
         embeddedKafka.consumeFromEmbeddedTopics(consumer, KAFKA_LISTENER_TOPIC, CLOUD_STREAM_OUTPUT_TOPIC);
     }
 
-    @AfterClass
-    public static void tearDown() {
+    @AfterEach
+    void tearDown() {
         if (consumer != null) {
             consumer.close();
         }
     }
 
-    @Before
-    public void before() {
-    }
-
     @Test
-    public void testKafkaLisener() {
+    void testKafkaLisener() {
         kafkaProducer.send(KAFKA_LISTENER_TOPIC, "foo");
         await().until(() -> "foo".equals(kafkaListenerConsumer.getPayload()));
     }
 
     @Test
-    public void testListenerContainer() {
+    void testListenerContainer() {
         kafkaTemplate.send(LISTENER_CONTAINER_TOPIC, "foo");
         await().until(() -> messageListenerContainerConsumer.consumedMessages.contains("foo"));
     }
 
     @Test
-    public void testCloudStream() {
+    void testCloudStream() {
         kafkaTemplate.send(CLOUD_STREAM_INPUT_TOPIC, "foo");
 
         ConsumerRecord<String, Object> cr = KafkaTestUtils.getSingleRecord(consumer, CLOUD_STREAM_OUTPUT_TOPIC, Duration.ofMillis(3000));

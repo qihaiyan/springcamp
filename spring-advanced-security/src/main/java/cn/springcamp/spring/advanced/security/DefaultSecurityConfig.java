@@ -1,5 +1,7 @@
 package cn.springcamp.spring.advanced.security;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
+import org.springframework.security.authorization.AuthorizationResult;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,7 +36,7 @@ public class DefaultSecurityConfig {
     private CustomAuthenticationProvider customAuthenticationProvider;
 
     @Bean
-    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) {
         MyRequestAuthorizationManager myRequestAuthorizationManager =
                 new MyRequestAuthorizationManager();
         http
@@ -82,7 +85,7 @@ final class MyRequestAuthorizationManager implements AuthorizationManager<Reques
 
     // 自定义授权校验逻辑
     @Override
-    public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext context) {
+    public AuthorizationResult authorize(@NonNull Supplier<? extends Authentication> authentication, RequestAuthorizationContext context) {
         EvaluationContext ctx = this.expressionHandler.createEvaluationContext(authentication, context);
         String checkParam = Optional.ofNullable(ctx.lookupVariable("param")).map(String::valueOf).orElse(null);
 
@@ -91,5 +94,10 @@ final class MyRequestAuthorizationManager implements AuthorizationManager<Reques
             return new AuthorizationDecision(true);
         }
         return new AuthorizationDecision(!ObjectUtils.isEmpty(authentication.get().getCredentials()));
+    }
+
+    @Override
+    public void verify(@NonNull Supplier<? extends @Nullable Authentication> authentication, RequestAuthorizationContext object) {
+        AuthorizationManager.super.verify(authentication, object);
     }
 }

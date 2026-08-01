@@ -12,7 +12,7 @@ import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Collection;
 

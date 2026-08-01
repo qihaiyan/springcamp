@@ -1,17 +1,9 @@
 package cn.springcamp.springcache;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import com.fasterxml.jackson.dataformat.cbor.CBORFactory;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
+import org.springframework.boot.cache.autoconfigure.CacheProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.Cache;
 import org.springframework.cache.annotation.CachingConfigurer;
@@ -27,12 +19,13 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.GenericJacksonJsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import tools.jackson.databind.cfg.DateTimeFeature;
 
 import java.time.Duration;
 
@@ -50,21 +43,29 @@ public class CacheConfig implements CachingConfigurer {
         return new CacheProperties();
     }
 
+    /**
+     * Builds a Jackson 3-based {@link GenericJacksonJsonRedisSerializer} with default (polymorphic)
+     * typing enabled so that type information is embedded as a {@code @class} property.
+     * <p>
+     * This mirrors the prior {@code GenericJackson2JsonRedisSerializer} setup that used a permissive
+     * subtype validator. {@code enableUnsafeDefaultTyping()} applies the same permissive validation
+     * (allow all subtypes) — only safe because Redis cache contents are written by this application itself.
+     */
+    private GenericJacksonJsonRedisSerializer jsonRedisSerializer() {
+        return GenericJacksonJsonRedisSerializer.builder()
+                .enableUnsafeDefaultTyping()
+                .customize(builder -> builder
+                        // JavaTime/Jdk8 support is built into Jackson 3 core, no module registration needed.
+                        .disable(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS))
+                .build();
+    }
+
     @Bean
     @Primary
     public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
-        ObjectMapper objectMapper = JsonMapper.builder(new CBORFactory())
-                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                .addModule(new JavaTimeModule())
-                .activateDefaultTyping(LaissezFaireSubTypeValidator.instance,
-                        ObjectMapper.DefaultTyping.NON_FINAL,
-                        JsonTypeInfo.As.PROPERTY)
-                .build();
-
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofSeconds(keyExpiration))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper)))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jsonRedisSerializer()))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 .disableCachingNullValues()
                 .computePrefixWith(cacheName -> cacheName.concat(":"));
@@ -133,18 +134,9 @@ public class CacheConfig implements CachingConfigurer {
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-
-        ObjectMapper objectMapper = JsonMapper.builder(new CBORFactory())
-                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                .addModule(new JavaTimeModule())
-                .activateDefaultTyping(LaissezFaireSubTypeValidator.instance,
-                        ObjectMapper.DefaultTyping.NON_FINAL,
-                        JsonTypeInfo.As.PROPERTY)
-                .build();
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
-        redisTemplate.setDefaultSerializer(new GenericJackson2JsonRedisSerializer(objectMapper));
+        redisTemplate.setDefaultSerializer(jsonRedisSerializer());
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         return redisTemplate;
