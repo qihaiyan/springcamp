@@ -2,15 +2,14 @@ package cn.springcamp.spring.advanced.security;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.restclient.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 @SpringBootApplication
 public class Application {
 
     @Bean
-    RestTemplate restTemplate(RestTemplateBuilder builder) {
+    RestClient restClient(RestClient.Builder builder) {
         return builder.build();
     }
 

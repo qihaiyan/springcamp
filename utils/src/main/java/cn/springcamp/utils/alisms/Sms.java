@@ -7,15 +7,13 @@ import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -41,7 +39,7 @@ public class Sms {
     private final Map<String, SmsConfig.Credential> iAcsClientMap = new ConcurrentHashMap<>();
 
     @Autowired
-    private RestTemplate restTemplate;
+    private RestClient restClient;
 
     public void sendSms(SmsTemplate smsTemplate, SmsRequestParams smsRequestParams, String providerAccountJson) {
         String senderName = StringUtils.hasText(smsRequestParams.getSenderName())
@@ -55,9 +53,6 @@ public class Sms {
     }
 
     private void sendSms(String phoneNumber, String templateParam, String senderName, SmsConfig.Credential credential) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
         String timestamp = ZonedDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
         Map<String, String> map = new TreeMap<>();
@@ -79,8 +74,12 @@ public class Sms {
         MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
         map.forEach(multiValueMap::add);
         multiValueMap.add("Signature", signature);
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(multiValueMap, headers);
-        SmsResponseDto response = restTemplate.postForObject(SMS_SEND_URL, request, SmsResponseDto.class);
+        SmsResponseDto response = restClient.post()
+                .uri(SMS_SEND_URL)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .body(multiValueMap)
+                .retrieve()
+                .body(SmsResponseDto.class);
         log.info("Send SMS by Ali, phoneNumber: {}, templateCode: {}, templateParam: {}, senderName: {}, response: {}"
                 , phoneNumber, "aliTemplateCode", templateParam, senderName, response);
         if (response != null && SMS_SUCCESS_STATUS.equals(response.getCode())) {

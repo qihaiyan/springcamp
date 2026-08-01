@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -29,18 +29,18 @@ import java.util.Map;
 @Controller
 public class SapLoginController {
     @Autowired
-    private RestTemplate restTemplate;
+    private RestClient restClient;
 
     @RequestMapping("/login/sap/cdc")
     public String loginWithSAP(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttrs) throws JacksonException {
         String idToken = request.getParameter("id_token");
-        String jpk = restTemplate.getForObject(UriComponentsBuilder
+        String jpk = restClient.get().uri(UriComponentsBuilder
                         .fromUriString("https://accounts.eu1.gigya.com/accounts.getJWTPublicKey")
                         .queryParam("ApiKey", "sap-api-key")
                         .queryParam("userKey", "sap-user-key")
                         .queryParam("secret", "{secret}")
-                        .build(Map.of("secret", "sap-secret"))
-                , String.class);
+                        .build(Map.of("secret", "sap-secret")))
+                .retrieve().body(String.class);
 
         Base64URL[] jwtPart;
         try {

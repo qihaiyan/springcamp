@@ -10,6 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.restclient.test.autoconfigure.AutoConfigureMockRestServiceServer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
@@ -29,7 +30,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.client.match.MockRestRequestMatchers;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -50,6 +50,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
         controlledShutdown = true,
         topics = { "testEmbeddedIn", "testEmbeddedOut" }
 )
+@AutoConfigureMockRestServiceServer
 class DemoApplicationTest {
 
     private static final String INPUT_TOPIC = "testEmbeddedIn";
@@ -75,18 +76,14 @@ class DemoApplicationTest {
     private RestClient restClient;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private MockRestServiceServer mockRestServiceServer;
     @Autowired
     private MyDomainRepository myDomainRepository;
     @Autowired
     private MyService myService;
 
-    private MockRestServiceServer mockRestServiceServer;
-
     @BeforeEach
     void before() {
-        mockRestServiceServer = MockRestServiceServer.bindTo(restTemplate).ignoreExpectOrder(true).build();
-
         this.mockRestServiceServer.expect(manyTimes(), MockRestRequestMatchers.requestTo(Matchers.startsWithIgnoringCase("http://someservice/foo")))
                 .andRespond(withSuccess("{\"code\": 200}", MediaType.APPLICATION_JSON));
 

@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 @Component
 public class MyService {
@@ -17,7 +17,7 @@ public class MyService {
     private String originValue;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private RestClient restClient;
     @Autowired
     private MyDomainRepository myDomainRepository;
 
@@ -39,7 +39,7 @@ public class MyService {
     }
 
     public String callRemote() {
-        return restTemplate.getForObject("http://someservice/foo", String.class);
+        return restClient.get().uri("http://someservice/foo").retrieve().body(String.class);
     }
 
     public String getOriginValue() {

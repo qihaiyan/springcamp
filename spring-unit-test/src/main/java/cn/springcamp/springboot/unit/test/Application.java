@@ -2,11 +2,10 @@ package cn.springcamp.springboot.unit.test;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.restclient.RestTemplateBuilder;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 import java.util.function.Function;
 
@@ -15,7 +14,7 @@ import java.util.function.Function;
 public class Application {
 
     @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+    public RestClient restClient(RestClient.Builder builder) {
         return builder.build();
     }
 

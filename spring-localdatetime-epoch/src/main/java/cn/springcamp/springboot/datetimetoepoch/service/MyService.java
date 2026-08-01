@@ -8,14 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
 @Component
 public class MyService {
-    @Autowired
-    private RestTemplate restTemplate;
     @Autowired
     private MyDomainRepository myDomainRepository;
 

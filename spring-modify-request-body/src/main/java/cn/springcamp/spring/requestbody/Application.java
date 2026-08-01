@@ -3,15 +3,14 @@ package cn.springcamp.spring.requestbody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.restclient.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 @Slf4j
 @SpringBootApplication
 public class Application {
     @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+    public RestClient restClient(RestClient.Builder builder) {
         return builder.build();
     }
 

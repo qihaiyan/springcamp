@@ -5,6 +5,7 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.restclient.test.autoconfigure.AutoConfigureMockRestServiceServer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpMethod;
@@ -14,25 +15,23 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.client.match.MockRestRequestMatchers;
 import org.springframework.test.web.client.response.MockRestResponseCreators;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestTemplate;
 
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockRestServiceServer
 class DemoApplicationTest {
 
     @Autowired
-    private RestTemplate restTemplate;
+    private MockRestServiceServer mockRestServiceServer;
     @LocalServerPort
     private int port;
 
-    private MockRestServiceServer mockRestServiceServer;
     private RestClient restClient;
 
     @BeforeEach
     void before() {
-        mockRestServiceServer = MockRestServiceServer.bindTo(restTemplate).ignoreExpectOrder(true).build();
         this.mockRestServiceServer.expect(ExpectedCount.manyTimes(), MockRestRequestMatchers.requestTo(Matchers.startsWithIgnoringCase("https://httpbin.org")))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(MockRestResponseCreators.withSuccess("{\"get\": 200}", MediaType.APPLICATION_JSON));
