@@ -1,5 +1,6 @@
 package cn.springcamp.elasticsearch.javaclient;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,7 +18,7 @@ public class Application implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String @NonNull ... args) throws Exception {
         demoService.save();
         List<DemoDomain> demoDomains = demoService.findAll();
         DemoDomain demoDomain = demoService.findOne();

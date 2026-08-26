@@ -1,5 +1,5 @@
 dependencies {
-    implementation 'co.elastic.clients:elasticsearch-java:8.9.2'
+    implementation 'co.elastic.clients:elasticsearch-java:8.19.19'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.0'
 
     // Needed only if you use the spring-dependency-management

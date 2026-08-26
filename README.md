@@ -32,31 +32,31 @@ cd springcamp/<模块目录>
 | [spring-ai-deepseek](spring-ai-deepseek)                             | Spring AI 集成 DeepSeek（对话/流式/推理/Function Calling） | [文章](https://springcamp.cn/spring-ai-deepseek/)                    |
 | [spring-mcp](spring-mcp)                                             | Spring MCP（模型上下文协议）集成示例                          | —                                                                  |
 | [spring-advanced-security](spring-advanced-security)                 | Spring Security 高级用法（自定义登录/鉴权）                   | [文章](https://springcamp.cn/spring-advanced-security/)              |
-| [spring-cloud-gateway](spring-cloud-gateway)                         | Spring Cloud Gateway 网关示例                        | —                                                                  |
-| [spring-kafka](spring-kafka)                                         | Spring Kafka 消息示例                                | —                                                                  |
-| [spring-cache](spring-cache)                                         | Spring Cache 缓存抽象                                | —                                                                  |
-| [spring-aop](spring-aop)                                             | Spring AOP 切面编程                                  | —                                                                  |
+| [spring-cloud-gateway](spring-cloud-gateway)                         | Spring Cloud Gateway 网关示例                        | [文章](https://springcamp.cn/spring-cloud-gateway/)                  |
+| [spring-kafka](spring-kafka)                                         | Spring Kafka 消息示例                                | [文章](https://springcamp.cn/spring-kafka/)                          |
+| [spring-cache](spring-cache)                                         | Spring Cache 缓存抽象                                | [文章](https://springcamp.cn/spring-data-cache/)                     |
+| [spring-aop](spring-aop)                                             | Spring AOP 切面编程                                  | [文章](https://springcamp.cn/spring-boot-aop/)                       |
 | [spring-data-flex-query](spring-data-flex-query)                     | Spring Data 灵活查询（防 SQL 注入）                       | [文章](https://springcamp.cn/spring-data-flex-query/)                |
-| [spring-data-jpa-multisource](spring-data-jpa-multisource)           | Spring Data JPA 多数据源                             | —                                                                  |
-| [spring-dynamic-datasource](spring-dynamic-datasource)               | 动态数据源切换                                          | —                                                                  |
+| [spring-data-jpa-multisource](spring-data-jpa-multisource)           | Spring Data JPA 多数据源                             | [文章](https://springcamp.cn/spring-jpa-multi-datasource/)           |
+| [spring-dynamic-datasource](spring-dynamic-datasource)               | 动态数据源切换                                          | [文章](https://springcamp.cn/spring-dynamic-datasource/)             |
 | [spring-dynamic-scheduler](spring-dynamic-scheduler)                 | 动态定时任务管控                                         | [文章](https://springcamp.cn/spring-dynamic-scheduler/)              |
 | [spring-http-interface](spring-http-interface)                       | Spring Boot 3.2 HTTP Interface 声明式调用             | [文章](https://springcamp.cn/spring-boot-http-interface/)            |
 | [spring-rest-client](spring-rest-client)                             | Spring Boot 3.2 RestClient                       | [文章](https://springcamp.cn/spring-boot-rest-client/)               |
 | [spring-rest-template-log](spring-rest-template-log)                 | RestTemplate 调用与 DNS 超时配置                        | [文章](https://springcamp.cn/spring-resttemplate-dns-timeout/)       |
-| [spring-rest-log-request-response](spring-rest-log-request-response) | REST 请求/响应日志                                     | —                                                                  |
+| [spring-rest-log-request-response](spring-rest-log-request-response) | REST 请求/响应日志                                     | [文章](https://springcamp.cn/spring-rest-log-request-response/)      |
 | [spring-modify-request-body](spring-modify-request-body)             | 统一修改 RequestBody                                 | [文章](https://springcamp.cn/spring-controller-modify-request-body/) |
 | [spring-sse](spring-sse)                                             | Server-Sent Events 服务端推送                         | —                                                                  |
-| [spring-native](spring-native)                                       | Spring Native 原生镜像                               | —                                                                  |
-| [spring-data-envers-conditional](spring-data-envers-conditional)     | 条件化审计日志                                          | —                                                                  |
-| [spring-data-jdbc-client](spring-data-jdbc-client)                   | Spring Data JDBC Client                          | —                                                                  |
-| [spring-easy-rule](spring-easy-rule)                                 | Easy Rules 规则引擎                                  | —                                                                  |
-| [spring-groovy](spring-groovy)                                       | 集成 Groovy 动态脚本                                   | —                                                                  |
-| [spring-redis-resolver](spring-redis-resolver)                       | 基于 Redis 的解析器                                    | —                                                                  |
-| [spring-localdatetime-epoch](spring-localdatetime-epoch)             | LocalDateTime 与 Epoch 互转                         | —                                                                  |
-| [spring-taskexecutor-block](spring-taskexecutor-block)               | TaskExecutor 阻塞行为                                | —                                                                  |
-| [spring-unit-test](spring-unit-test)                                 | Spring 单元测试                                      | —                                                                  |
-| [elasticsearch-javaclient](elasticsearch-javaclient)                 | Elasticsearch Java 客户端                           | —                                                                  |
-| [java-concurrency](java-concurrency)                                 | Java 并发编程                                        | —                                                                  |
+| [spring-native](spring-native)                                       | Spring Native 原生镜像                               | [文章](https://springcamp.cn/spring-native/)                         |
+| [spring-data-envers-conditional](spring-data-envers-conditional)     | 条件化审计日志                                          | [文章](https://springcamp.cn/spring-data-conditional-auditing/)      |
+| [spring-data-jdbc-client](spring-data-jdbc-client)                   | Spring Data JDBC Client                          | [文章](https://springcamp.cn/spring-boot-jdbc-client/)               |
+| [spring-easy-rule](spring-easy-rule)                                 | Easy Rules 规则引擎                                  | [文章](https://springcamp.cn/easy-rules/)                            |
+| [spring-groovy](spring-groovy)                                       | 集成 Groovy 动态脚本                                   | [文章](https://springcamp.cn/spring-groovy/)                         |
+| [spring-redis-resolver](spring-redis-resolver)                       | 基于 Redis 的解析器                                    | [文章](https://springcamp.cn/spring-redis-resolver/)                 |
+| [spring-localdatetime-epoch](spring-localdatetime-epoch)             | LocalDateTime 与 Epoch 互转                         | [文章](https://springcamp.cn/spring-localdatetime-epoch/)            |
+| [spring-taskexecutor-block](spring-taskexecutor-block)               | TaskExecutor 阻塞行为                                | [文章](https://springcamp.cn/java-concurrent-thread-block/)          |
+| [spring-unit-test](spring-unit-test)                                 | Spring 单元测试                                      | [文章](https://springcamp.cn/spring-boot-unit-test/)                 |
+| [elasticsearch-javaclient](elasticsearch-javaclient)                 | Elasticsearch Java 客户端                           | [文章](https://springcamp.cn/elasticsearch-javaclient/)              |
+| [java-concurrency](java-concurrency)                                 | Java 并发编程                                        | [文章](https://springcamp.cn/java-concurrency/)                      |
 | [utils](utils)                                                       | 通用工具类                                            | —                                                                  |
 
 > 完整文章列表见 [springcamp.cn](https://springcamp.cn)。
