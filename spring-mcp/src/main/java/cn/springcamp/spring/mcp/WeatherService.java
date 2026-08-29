@@ -1,126 +1,47 @@
 package cn.springcamp.spring.mcp;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestClientException;
 
+/**
+ * Weather tools with mock data, so the demo runs without any external service.
+ */
 @Service
 public class WeatherService {
 
-    private static final String BASE_URL = "https://api.weather.gov";
+    private static final String[] CONDITIONS = {"晴", "多云", "小雨", "小雪"};
+    private static final String[] WIND_DIRECTIONS = {"东风", "南风", "西风", "北风"};
+    private static final String[] ALERT_EVENTS = {"暴雨橙色预警", "高温黄色预警", "大风蓝色预警", "寒潮蓝色预警"};
+    private static final String[] SEVERITIES = {"低", "中等", "高", "严重"};
 
-    private final RestClient restClient;
-
-    public WeatherService() {
-
-        this.restClient = RestClient.builder()
-                .baseUrl(BASE_URL)
-                .defaultHeader("Accept", "application/geo+json")
-                .defaultHeader("User-Agent", "WeatherApiClient/1.0 (your@email.com)")
-                .build();
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record Points(@JsonProperty("properties") Props properties) {
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        public record Props(@JsonProperty("forecast") String forecast) {
-        }
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record Forecast(@JsonProperty("properties") Props properties) {
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        public record Props(@JsonProperty("periods") List<Period> periods) {
-        }
-
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        public record Period(@JsonProperty("number") Integer number, @JsonProperty("name") String name,
-                             @JsonProperty("startTime") String startTime, @JsonProperty("endTime") String endTime,
-                             @JsonProperty("isDaytime") Boolean isDayTime, @JsonProperty("temperature") Integer temperature,
-                             @JsonProperty("temperatureUnit") String temperatureUnit,
-                             @JsonProperty("temperatureTrend") String temperatureTrend,
-                             @JsonProperty("probabilityOfPrecipitation") Map probabilityOfPrecipitation,
-                             @JsonProperty("windSpeed") String windSpeed, @JsonProperty("windDirection") String windDirection,
-                             @JsonProperty("icon") String icon, @JsonProperty("shortForecast") String shortForecast,
-                             @JsonProperty("detailedForecast") String detailedForecast) {
-        }
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record Alert(@JsonProperty("features") List<Feature> features) {
-
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        public record Feature(@JsonProperty("properties") Properties properties) {
-        }
-
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        public record Properties(@JsonProperty("event") String event, @JsonProperty("areaDesc") String areaDesc,
-                                 @JsonProperty("severity") String severity, @JsonProperty("description") String description,
-                                 @JsonProperty("instruction") String instruction) {
-        }
-    }
-
-    /**
-     * Get forecast for a specific latitude/longitude
-     * @param latitude Latitude
-     * @param longitude Longitude
-     * @return The forecast for the given location
-     * @throws RestClientException if the request fails
-     */
     @Tool(description = "Get weather forecast for a specific latitude/longitude")
     public String getWeatherForecastByLocation(double latitude, double longitude) {
-
-        var points = restClient.get()
-                .uri("/points/{latitude},{longitude}", latitude, longitude)
-                .retrieve()
-                .body(Points.class);
-
-        var forecast = restClient.get().uri(points.properties().forecast()).retrieve().body(Forecast.class);
-
-        return forecast.properties().periods().stream().map(p -> String.format("""
-                %s:
-                Temperature: %s %s
-                Wind: %s %s
-                Forecast: %s
-                """, p.name(), p.temperature(), p.temperatureUnit(), p.windSpeed(), p.windDirection(),
-                p.detailedForecast())).collect(Collectors.joining());
+        StringBuilder forecast = new StringBuilder(String.format("坐标（%s, %s）未来三天预报：\n", latitude, longitude));
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        for (int day = 1; day <= 3; day++) {
+            forecast.append(String.format("""
+                    第%d天:
+                    温度: %d°C
+                    风力: %d级 %s
+                    天气: %s
+                    """, day, random.nextInt(-5, 36), random.nextInt(1, 9),
+                    WIND_DIRECTIONS[random.nextInt(WIND_DIRECTIONS.length)],
+                    CONDITIONS[random.nextInt(CONDITIONS.length)]));
+        }
+        return forecast.toString();
     }
 
-    /**
-     * Get alerts for a specific area
-     * @param state Area code. Two-letter US state code (e.g. CA, NY)
-     * @return Human readable alert information
-     * @throws RestClientException if the request fails
-     */
     @Tool(description = "Get weather alerts for a US state. Input is Two-letter US state code (e.g. CA, NY)")
     public String getAlerts(String state) {
-        Alert alert = restClient.get().uri("/alerts/active/area/{state}", state).retrieve().body(Alert.class);
-
-        return alert.features()
-                .stream()
-                .map(f -> String.format("""
-					Event: %s
-					Area: %s
-					Severity: %s
-					Description: %s
-					Instructions: %s
-					""", f.properties().event(), f.properties.areaDesc(), f.properties.severity(),
-                        f.properties.description(), f.properties.instruction()))
-                .collect(Collectors.joining("\n"));
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        String event = ALERT_EVENTS[random.nextInt(ALERT_EVENTS.length)];
+        return String.format("""
+                Event: %s
+                Area: %s
+                Severity: %s
+                Description: %s 生效中，请注意防范。
+                """, event, state, SEVERITIES[random.nextInt(SEVERITIES.length)], event);
     }
-
-    public static void main(String[] args) {
-        WeatherService client = new WeatherService();
-        System.out.println(client.getWeatherForecastByLocation(47.6062, -122.3321));
-        System.out.println(client.getAlerts("NY"));
-    }
-
 }

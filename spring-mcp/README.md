@@ -1,6 +1,6 @@
 # spring-mcp
 
-Spring AI MCP（Model Context Protocol）集成示例：基于 webmvc 实现一个天气查询 MCP Server（SSE 传输）。
+Spring AI MCP（Model Context Protocol）集成示例：基于 webmvc 实现一个天气查询 MCP Server（SSE 传输）。天气数据为 mock 模拟数据，无需申请 api-key。
 
 ## 运行
 

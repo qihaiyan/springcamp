@@ -1,7 +1,3 @@
-ext {
-	set('springAiVersion', "2.0.0")
-}
-
 dependencies {
 	implementation 'org.springframework.ai:spring-ai-starter-mcp-client'
 	implementation 'org.springframework.ai:spring-ai-starter-mcp-server-webmvc'
