@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring AI + HTMX 聊天示例</title>
+    <link rel="stylesheet" th:href="@{/css/chat.css}">
+    <!-- htmx 4 核心：负责局部请求与 HTML 片段交换 -->
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@4.0.0/dist/htmx.min.js"></script>
+    <!-- htmx 4 自带的 sse 扩展：把 text/event-stream 响应按消息逐条换入页面 -->
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@4.0.0/dist/ext/hx-sse.min.js"></script>
+    <!-- Alpine.js：管理客户端交互状态（输入框、按钮、打字提示等） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.2/dist/cdn.min.js"></script>
+</head>
+<body>
+<div class="app" x-data="chatApp()" x-cloak @htmx:sse:after:message.window="scrollBottom()">
+
+    <header class="app-header">
+        <div class="brand">
+            <span class="logo">AI</span>
+            <div>
+                <h1>Spring AI · HTMX · Alpine.js</h1>
+                <p>流式对话示例</p>
+            </div>
+        </div>
+        <button class="btn-ghost" @click="newChat()" :disabled="busy">＋ 新建会话</button>
+    </header>
+
+    <!-- 消息列表：POST /chat 的 SSE 响应里，第 1 条消息追加对话片段，后续消息替换 AI 气泡文本 -->
+    <main id="messages" class="messages">
+        <div class="empty-hint" x-show="count === 0" x-transition.opacity.duration.300ms>
+            <div class="empty-logo">💬</div>
+            <h2>开始一段新对话</h2>
+            <p>输入任何问题，AI 的回答会像打字一样逐字流出。</p>
+            <p class="tip">Enter 发送 · Shift + Enter 换行 · 多轮对话带上下文记忆</p>
+        </div>
+    </main>
+
+    <div class="status-bar">
+        <span class="typing-dots" x-show="busy" x-transition.opacity.duration.200ms>
+            <i></i><i></i><i></i> AI 正在回答
+        </span>
+    </div>
+
+    <!-- 输入区：htmx 发请求，Alpine 管状态 -->
+    <form class="composer" hx-ext="sse" hx-post="/chat" hx-target="#messages" hx-swap="beforeend"
+          @htmx:before:request="start()"
+          @htmx:finally:request="sent()"
+          @htmx:sse:error.window="busy = false">
+        <input type="hidden" name="conversationId" :value="conversationId">
+        <textarea name="message" x-ref="input" x-model="input" rows="1"
+                  placeholder="输入消息，Enter 发送…" @keydown.enter="onEnter($event)"></textarea>
+        <button type="submit" class="btn-send" :disabled="!canSend" :class="{ sending: busy }">
+            <span x-text="busy ? '回答中…' : '发送'">发送</span>
+        </button>
+    </form>
+
+</div>
+
+<script>
+    function chatApp() {
+        return {
+            busy: false,        // 一次回答从发问到 SSE 流结束之间锁定发送
+            input: '',
+            count: 0,           // 已发送的消息数，用于切换空态提示
+            conversationId: crypto.randomUUID(),
+
+            get canSend() {
+                return !this.busy && this.input.trim().length > 0;
+            },
+
+            onEnter(e) {
+                if (e.shiftKey) return;   // Shift+Enter 保留换行
+                e.preventDefault();
+                if (this.canSend) this.$refs.input.form.requestSubmit();
+            },
+
+            start() {          // htmx 发出请求：锁定输入并立即清空输入框
+                this.busy = true;
+                this.input = '';
+                this.count++;
+                this.$refs.input.value = '';
+            },
+
+            sent() {           // htmx 4 在 SSE 流结束后（finally:request）才结束请求：此刻解锁
+                this.busy = false;
+            },
+
+            scrollBottom() {   // 每条 SSE 消息换入后保持滚动到底部（instant 避免流式期间平滑动画互相打断）
+                const box = document.getElementById('messages');
+                box.scrollTo({ top: box.scrollHeight, behavior: 'instant' });
+            },
+
+            newChat() {        // 换一个会话 id（服务端记忆按 id 隔离），并清空页面消息
+                const old = this.conversationId;
+                this.conversationId = crypto.randomUUID();
+                this.count = 0;
+                this.busy = false;
+                this.input = '';
+                document.querySelectorAll('#messages .message').forEach(n => n.remove());
+                fetch('/chat?conversationId=' + encodeURIComponent(old), { method: 'DELETE' });
+            }
+        }
+    }
+</script>
+</body>
+</html>

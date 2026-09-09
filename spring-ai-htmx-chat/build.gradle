@@ -1,0 +1,11 @@
+dependencies {
+    implementation 'org.springframework.ai:spring-ai-starter-model-deepseek'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
+    }
+}

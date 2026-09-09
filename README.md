@@ -30,6 +30,7 @@ cd springcamp/<模块目录>
 | 模块                                                                   | 功能                                               | 配套博客                                                               |
 | -------------------------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------ |
 | [spring-ai-deepseek](spring-ai-deepseek)                             | Spring AI 集成 DeepSeek（对话/流式/推理/Function Calling） | [文章](https://springcamp.cn/spring-ai-deepseek/)                    |
+| [spring-ai-htmx-chat](spring-ai-htmx-chat)                           | Spring AI + HTMX 4 + Alpine.js 流式聊天界面（SSE）       | —                                                                  |
 | [spring-mcp](spring-mcp)                                             | Spring MCP（模型上下文协议）集成示例                          | —                                                                  |
 | [spring-advanced-security](spring-advanced-security)                 | Spring Security 高级用法（自定义登录/鉴权）                   | [文章](https://springcamp.cn/spring-advanced-security/)              |
 | [spring-cloud-gateway](spring-cloud-gateway)                         | Spring Cloud Gateway 网关示例                        | [文章](https://springcamp.cn/spring-cloud-gateway/)                  |

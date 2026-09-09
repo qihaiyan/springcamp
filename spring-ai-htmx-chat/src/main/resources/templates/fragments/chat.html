@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="exchange(message, answerId)" class="exchange">
+
+    <div class="message user">
+        <div class="bubble" th:text="${message}">用户消息</div>
+    </div>
+
+    <div class="message assistant">
+        <div class="bubble">
+            <span class="bubble-text" th:id="${answerId}">
+                <span class="typing-dots"><i></i><i></i><i></i></span>
+            </span>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

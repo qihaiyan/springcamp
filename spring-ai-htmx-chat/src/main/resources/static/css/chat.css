@@ -1,0 +1,196 @@
+/* ===== 基础布局 ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+[x-cloak] { display: none !important; }
+
+html, body { height: 100%; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(160deg, #eef2ff 0%, #f8fafc 40%, #ecfeff 100%);
+    color: #0f172a;
+}
+
+.app {
+    max-width: 860px;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 12px;
+}
+
+/* ===== 顶栏 ===== */
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, .75);
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+}
+
+.brand { display: flex; align-items: center; gap: 12px; }
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 15px;
+    color: #fff;
+    background: linear-gradient(135deg, #6366f1, #0ea5e9);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, .35);
+}
+
+.brand h1 { font-size: 16px; font-weight: 700; }
+.brand p { font-size: 12px; color: #64748b; }
+
+.btn-ghost {
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    color: #334155;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all .15s ease;
+}
+.btn-ghost:hover:not(:disabled) { border-color: #6366f1; color: #6366f1; }
+.btn-ghost:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ===== 消息列表 ===== */
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 8px 4px;
+    scroll-behavior: smooth;
+}
+
+.exchange { display: contents; }
+
+.message { display: flex; }
+.message.user { justify-content: flex-end; }
+.message.assistant { justify-content: flex-start; }
+
+.bubble {
+    max-width: 78%;
+    padding: 10px 14px;
+    font-size: 14px;
+    line-height: 1.7;
+    border-radius: 16px;
+    word-break: break-word;
+}
+
+.message.user .bubble {
+    color: #fff;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, .25);
+    white-space: pre-wrap;
+}
+
+.message.assistant .bubble {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, .06);
+}
+
+.bubble-text { white-space: pre-wrap; }
+
+/* ===== 打字动画（气泡内 + 状态栏共用） ===== */
+.typing-dots { display: inline-flex; align-items: center; gap: 4px; margin-left: 6px; }
+
+.typing-dots i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #94a3b8;
+    animation: blink 1.2s infinite ease-in-out;
+}
+.typing-dots i:nth-child(2) { animation-delay: .18s; }
+.typing-dots i:nth-child(3) { animation-delay: .36s; }
+
+@keyframes blink {
+    0%, 80%, 100% { opacity: .25; transform: scale(.85); }
+    40% { opacity: 1; transform: scale(1); }
+}
+
+/* ===== 空态提示 ===== */
+.empty-hint {
+    margin: auto;
+    text-align: center;
+    color: #64748b;
+    padding: 32px;
+}
+.empty-logo { font-size: 40px; margin-bottom: 12px; }
+.empty-hint h2 { color: #334155; font-size: 18px; margin-bottom: 8px; }
+.empty-hint .tip { font-size: 12px; margin-top: 10px; color: #94a3b8; }
+
+/* ===== 状态栏 ===== */
+.status-bar {
+    min-height: 22px;
+    padding: 0 6px;
+    font-size: 12px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+}
+
+/* ===== 输入区 ===== */
+.composer {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, .06);
+    transition: border-color .15s ease;
+}
+.composer:focus-within { border-color: #6366f1; }
+
+.composer textarea {
+    flex: 1;
+    border: none;
+    outline: none;
+    resize: none;
+    font: inherit;
+    font-size: 14px;
+    line-height: 1.6;
+    max-height: 140px;
+    background: transparent;
+}
+
+.btn-send {
+    border: none;
+    padding: 9px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    cursor: pointer;
+    transition: all .15s ease;
+    white-space: nowrap;
+}
+.btn-send:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(79, 70, 229, .35); }
+.btn-send:disabled { opacity: .45; cursor: not-allowed; }
+.btn-send.sending { opacity: .7; }
+
+/* ===== 移动端 ===== */
+@media (max-width: 640px) {
+    .bubble { max-width: 90%; }
+    .brand p { display: none; }
+}
