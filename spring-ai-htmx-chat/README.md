@@ -5,6 +5,12 @@ Spring AI + HTMX 4 + Alpine.js + Thymeleaf 实现的流式 AI 聊天界面：不
 
 技术栈版本：**htmx 4.0.0**（fetch 重写版，SSE 流式交换回归核心）、**Alpine.js 3.17.2**。
 
+## 界面演示
+
+流式输出中：AI 回答逐字流入气泡，状态栏显示打字动画，发送按钮锁定防止重复提交。
+
+![流式输出中](docs/chat-streaming.png)
+
 ## 功能
 
 - **流式输出**：AI 回答通过 SSE（`text/event-stream`）逐 token 流入页面，带打字动画
@@ -81,4 +87,4 @@ htmx 4 基于 fetch 重写，随包发布的 `sse` 扩展可以直接消费**普
 
 ## 配套博客
 
-—
+[HTMX实现AI流式聊天界面](https://springcamp.cn/spring-ai-htmx-chat/)
