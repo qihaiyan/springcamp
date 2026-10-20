@@ -1,15 +1,17 @@
 # spring-rest-template-log
 
-RestTemplate 调用示例：请求/响应日志输出与 DNS 解析超时配置。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+RestTemplate example: request/response logging and DNS resolution timeout configuration.
 
-无外部依赖。
+## Run
+
+No external dependencies.
 
 ```bash
 ./gradlew :spring-rest-template-log:bootRun
 ```
 
-## 配套博客
+## Blog
 
-[Spring RestTemplate配置DNS解析超时](https://springcamp.cn/spring-resttemplate-dns-timeout/)
+[Spring RestTemplate配置DNS解析超时](https://springcamp.cn/spring-resttemplate-dns-timeout/)（Chinese）

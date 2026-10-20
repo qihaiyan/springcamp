@@ -1,15 +1,17 @@
 # spring-advanced-security
 
-Spring Security 高级用法：自定义 AuthenticationProvider、UserDetailsService、登录入口与鉴权控制。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Advanced Spring Security usage: custom AuthenticationProvider, UserDetailsService, login entry point and authorization rules.
 
-无外部依赖。启动后访问 `http://localhost:8080`，按登录引导体验自定义认证流程。
+## Run
+
+No external dependencies. Visit `http://localhost:8080` and follow the custom login flow.
 
 ```bash
 ./gradlew :spring-advanced-security:bootRun
 ```
 
-## 配套博客
+## Blog
 
-[SpringSecurity高级用法](https://springcamp.cn/spring-advanced-security/)
+[SpringSecurity高级用法](https://springcamp.cn/spring-advanced-security/)（Chinese）

@@ -1,10 +1,12 @@
 # utils
 
-通用工具类集合：JsonUtils（Jackson 封装与统一 ObjectMapper 配置）、阿里云短信发送等。启动后由 CommandLineRunner 演示 JSON 工具用法。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Common utilities: JsonUtils (Jackson wrapper with a unified ObjectMapper configuration), Aliyun SMS sending, etc. On startup a CommandLineRunner demos the JSON utilities.
 
-无外部依赖。
+## Run
+
+No external dependencies.
 
 ```bash
 ./gradlew :utils:bootRun

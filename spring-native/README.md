@@ -1,22 +1,24 @@
 # spring-native
 
-Spring Boot 3 AOT（GraalVM Native Image）应用开发示例。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Spring Boot 3 AOT (GraalVM Native Image) application example.
 
-JVM 方式直接运行：
+## Run
+
+Run on the JVM:
 
 ```bash
 ./gradlew :spring-native:bootRun
 ```
 
-构建原生镜像（需本地 GraalVM）：
+Build a native image (requires a local GraalVM):
 
 ```bash
 ./gradlew :spring-native:nativeCompile
 build/native/nativeCompile/spring-native
 ```
 
-## 配套博客
+## Blog
 
-[Spring Boot 3的AOT（GraalVM Native Image）应用开发](https://springcamp.cn/spring-native/)
+[Spring Boot 3的AOT（GraalVM Native Image）应用开发](https://springcamp.cn/spring-native/)（Chinese）

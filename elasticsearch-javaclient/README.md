@@ -1,15 +1,17 @@
 # elasticsearch-javaclient
 
-Elasticsearch 新版 Java 客户端（elasticsearch-java）使用示例：文档增删改查与检索。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+The new Elasticsearch Java client (elasticsearch-java): document CRUD and search.
 
-前置条件：本地 Elasticsearch（`localhost:9200`）。启动后由 CommandLineRunner 自动执行示例并输出结果。
+## Run
+
+Prerequisite: a local Elasticsearch on `localhost:9200`. On startup a CommandLineRunner executes the demo and prints results.
 
 ```bash
 ./gradlew :elasticsearch-javaclient:bootRun
 ```
 
-## 配套博客
+## Blog
 
-[ElasticSearch新版JavaClient使用简介](https://springcamp.cn/elasticsearch-javaclient/)
+[ElasticSearch新版JavaClient使用简介](https://springcamp.cn/elasticsearch-javaclient/)（Chinese）

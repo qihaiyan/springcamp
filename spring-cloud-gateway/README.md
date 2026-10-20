@@ -1,15 +1,17 @@
 # spring-cloud-gateway
 
-Spring Cloud Gateway 网关示例：基于路由配置动态转发后端服务（含自定义 UriHostPlaceholderFilter），路由数据存内嵌 H2。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Spring Cloud Gateway example: dynamic routing to backend services with a custom UriHostPlaceholderFilter; routes stored in embedded H2.
 
-无外部依赖。
+## Run
+
+No external dependencies.
 
 ```bash
 ./gradlew :spring-cloud-gateway:bootRun
 ```
 
-## 配套博客
+## Blog
 
-[SpringCloudGateway 动态转发后端服务](https://springcamp.cn/spring-cloud-gateway/)
+[SpringCloudGateway 动态转发后端服务](https://springcamp.cn/spring-cloud-gateway/)（Chinese）

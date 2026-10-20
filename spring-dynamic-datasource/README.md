@@ -1,15 +1,17 @@
 # spring-dynamic-datasource
 
-动态数据源切换示例：按配置注册多个数据源（dbsource1/dbsource2，均为内嵌 H2），运行时按 code 路由。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Dynamic datasource switching: multiple datasources registered from config (dbsource1/dbsource2, both embedded H2), routed by code at runtime.
 
-无外部依赖。
+## Run
+
+No external dependencies.
 
 ```bash
 ./gradlew :spring-dynamic-datasource:bootRun
 ```
 
-## 配套博客
+## Blog
 
-[spring动态数据源](https://springcamp.cn/spring-dynamic-datasource/)
+[spring动态数据源](https://springcamp.cn/spring-dynamic-datasource/)（Chinese）

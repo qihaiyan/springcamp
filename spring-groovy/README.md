@@ -1,15 +1,17 @@
 # spring-groovy
 
-集成 Groovy 动态脚本示例：在 Spring 应用中加载并执行 Groovy 脚本。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Groovy dynamic scripts in Spring: load and execute Groovy scripts from a Spring application.
 
-无外部依赖。
+## Run
+
+No external dependencies.
 
 ```bash
 ./gradlew :spring-groovy:bootRun
 ```
 
-## 配套博客
+## Blog
 
-[springboot集成groovy脚本](https://springcamp.cn/spring-groovy/)
+[springboot集成groovy脚本](https://springcamp.cn/spring-groovy/)（Chinese）

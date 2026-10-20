@@ -1,15 +1,17 @@
 # spring-rest-client
 
-Spring Boot 3.2 RestClient 示例：链式调用的同步 HTTP 客户端。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Spring Boot 3.2 RestClient: the fluent, synchronous HTTP client.
 
-无外部依赖。
+## Run
+
+No external dependencies.
 
 ```bash
 ./gradlew :spring-rest-client:bootRun
 ```
 
-## 配套博客
+## Blog
 
-[Spring Boot 3.2 新特性之 RestClient](https://springcamp.cn/spring-boot-rest-client/)
+[Spring Boot 3.2 新特性之 RestClient](https://springcamp.cn/spring-boot-rest-client/)（Chinese）

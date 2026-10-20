@@ -1,15 +1,17 @@
 # spring-data-jpa-multisource
 
-Spring Data JPA 多数据源示例：主数据源与第二数据源（`other.datasource`）各自独立配置 EntityManager 与事务。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Spring Data JPA with multiple datasources: the primary datasource and the second one (`other.datasource`) each get their own EntityManager and transaction manager.
 
-`bootRun` 需本地 MySQL（`localhost:3306/demo`，root/root，主数据源为内嵌 H2）；单元测试全部使用 H2，无需安装：
+## Run
+
+`bootRun` expects a local MySQL (`localhost:3306/demo`, root/root; the primary datasource is embedded H2). Unit tests run entirely on H2 — no installation required:
 
 ```bash
 ./gradlew :spring-data-jpa-multisource:test
 ```
 
-## 配套博客
+## Blog
 
-[SpringBoot项目中的多数据源支持](https://springcamp.cn/spring-jpa-multi-datasource/)
+[SpringBoot项目中的多数据源支持](https://springcamp.cn/spring-jpa-multi-datasource/)（Chinese）

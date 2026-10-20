@@ -1,90 +1,98 @@
 # spring-ai-htmx-chat
 
-Spring AI + HTMX 4 + Alpine.js + Thymeleaf 实现的流式 AI 聊天界面：不写前端框架、不打包 npm，
-纯服务端渲染 HTML 片段 + SSE 流式输出，即可获得类 ChatGPT 的逐字打字效果。
+> English | [中文](README.zh-CN.md)
 
-技术栈版本：**htmx 4.0.0**（fetch 重写版，SSE 流式交换回归核心）、**Alpine.js 3.17.2**。
+A streaming AI chat UI built with Spring AI + HTMX 4 + Alpine.js + Thymeleaf: no frontend framework,
+no npm build — server-rendered HTML fragments plus SSE streaming give you a ChatGPT-style typing effect.
 
-## 界面演示
+Stack versions: **htmx 4.0.0** (the fetch rewrite, where SSE streaming swaps are back at the core) and
+**Alpine.js 3.17.2**.
 
-流式输出中：AI 回答逐字流入气泡，状态栏显示打字动画，发送按钮锁定防止重复提交。
+## Demo
 
-![流式输出中](docs/chat-streaming.png)
+While streaming: the AI answer flows into the chat bubble token by token, the status bar shows a typing
+animation, and the send button is locked to prevent duplicate submissions.
 
-## 功能
+![streaming](docs/chat-streaming.png)
 
-- **流式输出**：AI 回答通过 SSE（`text/event-stream`）逐 token 流入页面，带打字动画
-- **多轮对话**：服务端 `MessageWindowChatMemory` 按会话 id 保存上下文（最近 20 条）
-- **新建会话**：一键换新会话 id，同时清空服务端记忆与页面消息
-- **无前端构建**：htmx/Alpine.js 走 CDN，样式为单个手写 CSS 文件
+## Features
 
-## 运行
+- **Streaming**: the AI answer streams token by token over SSE (`text/event-stream`) with a typing animation
+- **Multi-turn chat**: server-side `MessageWindowChatMemory` keeps context per conversation id (last 20 messages)
+- **New conversation**: one click switches to a new conversation id and clears both server memory and the page
+- **No frontend build**: htmx/Alpine.js from CDN, styles in a single hand-written CSS file
 
-### 方式一：demo 模式（无需 API Key）
+## Run
 
-内置一个本地假模型，把一段固定回复逐字吐出，用于体验完整交互流程：
+### Option 1: demo mode (no API key)
+
+A built-in local fake model streams a fixed reply token by token, to try the full interaction flow:
 
 ```bash
 ./gradlew :spring-ai-htmx-chat:bootRun --args='--spring.profiles.active=demo'
 ```
 
-### 方式二：接入真实大模型（DeepSeek）
+### Option 2: real LLM (DeepSeek)
 
-1. 修改 `src/main/resources/application.properties` 中的 `spring.ai.deepseek.api-key`
-   （或设置环境变量 `DEEPSEEK_API_KEY`）；
-2. 启动：
+1. Set `spring.ai.deepseek.api-key` in `src/main/resources/application.properties`
+   (or export the environment variable `DEEPSEEK_API_KEY`);
+2. Start:
 
 ```bash
 ./gradlew :spring-ai-htmx-chat:bootRun
 ```
 
-浏览器打开 <http://localhost:8080>。
+Then open <http://localhost:8080> in a browser.
 
-## 实现要点
+## How it works
 
-htmx 4 基于 fetch 重写，随包发布的 `sse` 扩展可以直接消费**普通请求返回的
-`text/event-stream` 响应**——每条 SSE 消息被当作一次局部交换。因此整个聊天只需要一个接口：
+htmx 4 is rewritten on fetch, and its bundled `sse` extension can consume a **plain request that returns a
+`text/event-stream` response** — every SSE message is treated as a partial swap. So the whole chat needs a
+single endpoint:
 
 ```
-浏览器                                   服务端
-  │ POST /chat (htmx 表单)                │
+Browser                                  Server
+  │ POST /chat (htmx form)                │
   │      Accept: text/event-stream        │
-  │──────────────────────────────────────▶│ 调用大模型流式接口
-  │◀─ SSE 消息 1：对话骨架                 │  用户气泡 + AI 气泡（含打字动画、唯一 id）
-  │◀─ SSE 消息 2：<hx-partial …>累积文本   │  每个 token 一条消息
-  │◀─ SSE 消息 3：<hx-partial …>累积文本   │
-  │◀─ …流结束（连接关闭）                   │
+  │──────────────────────────────────────▶│ calls the LLM streaming API
+  │◀ SSE message 1: chat skeleton          │  user bubble + AI bubble (typing animation, unique id)
+  │◀ SSE message 2: <hx-partial …> text    │  one message per token, accumulated
+  │◀ SSE message 3: <hx-partial …> text    │
+  │◀ …stream ends (connection closed)      │
 ```
 
-- **htmx**：表单 `hx-post` + `hx-swap="beforeend"`，第 1 条 SSE 消息把「用户气泡 + AI 气泡骨架」
-  追加进消息列表；后续每条消息是一个 `<hx-partial hx-target="#ans-xxx" hx-swap="innerHTML">`
-  片段，整段替换 AI 气泡文本——第一个 token 到达时打字动画自然消失
-- **请求生命周期**：htmx 4 默认 `sse.releaseOn:end`，SSE 流结束才触发
-  `htmx:finally:request`（注意 v4 事件名是冒号风格），天然防止流式期间重复提交
-- **Alpine.js**：监听 `@htmx:before:request`（锁定输入、清空输入框）、`@htmx:finally:request`
-  （流结束解锁）、`@htmx:sse:after:message`（每条消息后滚动到底部），管理按钮/空态提示等状态
-- **Spring AI**：`ChatClient` + `MessageChatMemoryAdvisor` 提供带记忆的流式对话，
-  会话 id 通过 `ChatMemory.CONVERSATION_ID` 参数按请求传入
-- **XSS 防护**：用户消息经 `th:text` 输出、模型 token 输出前手动转义
+- **htmx**: form `hx-post` + `hx-swap="beforeend"`; the 1st SSE message appends the "user bubble + AI
+  bubble skeleton" to the message list; each following message is an
+  `<hx-partial hx-target="#ans-xxx" hx-swap="innerHTML">` fragment that replaces the AI bubble text — the
+  typing animation naturally disappears when the first token arrives
+- **Request lifecycle**: htmx 4 defaults to `sse.releaseOn:end`, so `htmx:finally:request` (note the v4
+  colon-style event names) only fires when the SSE stream ends, naturally preventing duplicate submissions
+  during streaming
+- **Alpine.js**: listens to `@htmx:before:request` (lock input, clear the box), `@htmx:finally:request`
+  (unlock when the stream ends) and `@htmx:sse:after:message` (scroll to bottom after each message),
+  managing button/empty-state UI
+- **Spring AI**: `ChatClient` + `MessageChatMemoryAdvisor` provide memory-aware streaming chat; the
+  conversation id is passed per request via the `ChatMemory.CONVERSATION_ID` parameter
+- **XSS protection**: user messages rendered with `th:text`; model tokens escaped manually before output
 
-## 关键文件
+## Key files
 
-| 文件 | 说明 |
+| File | Description |
 | --- | --- |
-| `ChatController.java` | POST /chat 返回 SSE 流（骨架消息 + 逐 token 的 hx-partial 消息），DELETE 清空会话 |
-| `ChatConfig.java` | ChatClient / ChatMemory 装配，demo 模式假模型 |
-| `templates/index.html` | 聊天页面，htmx 4 + Alpine.js 交互 |
-| `templates/fragments/chat.html` | 一轮对话的开始片段（用户气泡 + AI 气泡骨架） |
-| `static/css/chat.css` | 界面样式 |
+| `ChatController.java` | POST /chat returns the SSE stream (skeleton message + per-token hx-partial messages); DELETE clears the conversation |
+| `ChatConfig.java` | ChatClient / ChatMemory wiring; fake model for demo mode |
+| `templates/index.html` | Chat page, htmx 4 + Alpine.js interaction |
+| `templates/fragments/chat.html` | Opening fragment of one turn (user bubble + AI bubble skeleton) |
+| `static/css/chat.css` | UI styles |
 
-## 测试
+## Test
 
-测试中用 `@MockitoBean` 替换 `DeepSeekChatModel`，不依赖真实 API Key：
+Tests replace `DeepSeekChatModel` with `@MockitoBean`, no real API key needed:
 
 ```bash
 ./gradlew :spring-ai-htmx-chat:test
 ```
 
-## 配套博客
+## Blog
 
-[HTMX实现AI流式聊天界面](https://springcamp.cn/spring-ai-htmx-chat/)
+[HTMX实现AI流式聊天界面](https://springcamp.cn/spring-ai-htmx-chat/)（Chinese）

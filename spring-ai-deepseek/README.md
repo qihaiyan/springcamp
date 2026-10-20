@@ -1,15 +1,17 @@
 # spring-ai-deepseek
 
-Spring AI 集成 DeepSeek 大模型：对话、流式输出、推理内容与 Function Calling。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Spring AI integration with the DeepSeek LLM: chat, streaming, reasoning content and Function Calling.
 
-前置条件：DeepSeek API Key，修改 `src/main/resources/application.properties` 中的 `spring.ai.deepseek.api-key`。
+## Run
+
+Prerequisite: a DeepSeek API key — set `spring.ai.deepseek.api-key` in `src/main/resources/application.properties`.
 
 ```bash
 ./gradlew :spring-ai-deepseek:bootRun
 ```
 
-## 配套博客
+## Blog
 
-[Spring AI集成DeepSeek大模型](https://springcamp.cn/spring-ai-deepseek/)
+[Spring AI集成DeepSeek大模型](https://springcamp.cn/spring-ai-deepseek/)（Chinese）

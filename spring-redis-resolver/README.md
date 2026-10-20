@@ -1,15 +1,17 @@
 # spring-redis-resolver
 
-基于 Redis 的缓存自定义 Resolver/KeyGenerator 示例。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Custom cache Resolver/KeyGenerator backed by Redis.
 
-`bootRun` 需本地 Redis（`localhost:6379`）；单元测试使用内嵌 Redis，无需安装：
+## Run
+
+`bootRun` expects a local Redis (`localhost:6379`); unit tests use an embedded Redis — no installation required:
 
 ```bash
 ./gradlew :spring-redis-resolver:test
 ```
 
-## 配套博客
+## Blog
 
-[spring缓存自定义resolver](https://springcamp.cn/spring-redis-resolver/)
+[spring缓存自定义resolver](https://springcamp.cn/spring-redis-resolver/)（Chinese）

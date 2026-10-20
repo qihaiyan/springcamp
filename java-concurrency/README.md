@@ -1,7 +1,13 @@
 # java-concurrency
 
-Java 并发编程示例集：Atomic 原子类、synchronized/Lock、volatile 与数据竞争、ThreadLocal、CompletableFuture、CountDownLatch 等，每个演示类都有独立 main 方法。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Java concurrency examples: atomic classes, synchronized/Lock, volatile & data races, ThreadLocal, CompletableFuture, CountDownLatch — each demo class has its own main method.
 
-纯源码演示工程（未配置 Gradle 构建），在 IDE 中直接运行各演示类的 main 方法即可。
+## Run
+
+Plain source demo (no Gradle build configured) — run the `main()` of each demo class in your IDE.
+
+## Blog
+
+[java并发编程](https://springcamp.cn/java-concurrency/)（Chinese）

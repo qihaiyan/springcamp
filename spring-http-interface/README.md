@@ -1,15 +1,17 @@
 # spring-http-interface
 
-Spring Boot 3.2 HTTP Interface 示例：声明式接口 + `HttpServiceProxyFactory` 完成 HTTP 调用。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Spring Boot 3.2 HTTP Interface: declarative HTTP calls via interface + `HttpServiceProxyFactory`.
 
-无外部依赖。
+## Run
+
+No external dependencies.
 
 ```bash
 ./gradlew :spring-http-interface:bootRun
 ```
 
-## 配套博客
+## Blog
 
-[Spring Boot 3.2 新特性之 HTTP Interface](https://springcamp.cn/spring-boot-http-interface/)
+[Spring Boot 3.2 新特性之 HTTP Interface](https://springcamp.cn/spring-boot-http-interface/)（Chinese）

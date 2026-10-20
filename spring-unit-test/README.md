@@ -1,15 +1,17 @@
 # spring-unit-test
 
-Spring Boot 单元测试技术示例合集：内嵌 Redis/Kafka/H2、Mockito、测试配置覆盖等，全部通过单元测试演示。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Spring Boot unit-testing techniques: embedded Redis/Kafka/H2, Mockito, test configuration overrides — all demonstrated by tests.
 
-无需安装任何中间件：
+## Run
+
+No middleware installation required:
 
 ```bash
 ./gradlew :spring-unit-test:test
 ```
 
-## 配套博客
+## Blog
 
-[springboot单元测试技术](https://springcamp.cn/spring-boot-unit-test/)
+[springboot单元测试技术](https://springcamp.cn/spring-boot-unit-test/)（Chinese）

@@ -1,15 +1,17 @@
 # spring-rest-log-request-response
 
-REST 接口请求/响应日志示例：基于 CommonsRequestLoggingFilter 打印完整请求与响应内容。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+REST request/response logging: prints full requests and responses via CommonsRequestLoggingFilter.
 
-无外部依赖。
+## Run
+
+No external dependencies.
 
 ```bash
 ./gradlew :spring-rest-log-request-response:bootRun
 ```
 
-## 配套博客
+## Blog
 
-[spring打印http接口请求和响应](https://springcamp.cn/spring-rest-log-request-response/)
+[spring打印http接口请求和响应](https://springcamp.cn/spring-rest-log-request-response/)（Chinese）

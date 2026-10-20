@@ -1,15 +1,17 @@
 # spring-aop
 
-Spring AOP 切面编程示例：@Before/@After 增强、自定义注解 @TrackTime 与执行耗时统计切面。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Spring AOP example: @Before/@After advice, a custom @TrackTime annotation and an execution-time aspect.
 
-无外部依赖。
+## Run
+
+No external dependencies.
 
 ```bash
 ./gradlew :spring-aop:bootRun
 ```
 
-## 配套博客
+## Blog
 
-[SpringBoot项目中使用AOP](https://springcamp.cn/spring-boot-aop/)
+[SpringBoot项目中使用AOP](https://springcamp.cn/spring-boot-aop/)（Chinese）

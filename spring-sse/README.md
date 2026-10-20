@@ -1,10 +1,12 @@
 # spring-sse
 
-Server-Sent Events 服务端推送示例：SseEmitter 封装、连接注册表、事件历史与断线重连回放。
+> English | [中文](README.zh-CN.md)
 
-## 运行
+Server-Sent Events push: SseEmitter wrapper, connection registry, event history and replay on reconnect.
 
-无外部依赖。启动后访问 `http://localhost:8080` 下的 SSE 接口体验推送与重连。
+## Run
+
+No external dependencies. After startup, hit the SSE endpoints under `http://localhost:8080`.
 
 ```bash
 ./gradlew :spring-sse:bootRun
