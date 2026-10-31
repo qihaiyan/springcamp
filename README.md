@@ -33,6 +33,7 @@ cd springcamp
 | ------------------------------------------------------------------ | ------------------------------------------------- | -------------------------------------------------------- |
 | [spring-ai-deepseek](spring-ai-deepseek)                           | Spring AI + DeepSeek (chat / streaming / reasoning / function calling) | [post](https://springcamp.cn/spring-ai-deepseek/)        |
 | [spring-ai-htmx-chat](spring-ai-htmx-chat)                         | Streaming AI chat UI with HTMX 4 + Alpine.js      | [post](https://springcamp.cn/spring-ai-htmx-chat/)       |
+| [spring-ai-tanstack-chat](spring-ai-tanstack-chat)                 | Streaming AI chat UI with TanStack AI (React, AG-UI) | —                                                      |
 | [spring-mcp](spring-mcp)                                           | Spring MCP (Model Context Protocol) server example | —                                                        |
 | [spring-advanced-security](spring-advanced-security)               | Advanced Spring Security (custom login / auth)     | [post](https://springcamp.cn/spring-advanced-security/)  |
 | [spring-cloud-gateway](spring-cloud-gateway)                       | Spring Cloud Gateway dynamic routing               | [post](https://springcamp.cn/spring-cloud-gateway/)      |
@@ -67,8 +68,3 @@ cd springcamp
 
 ![Alt](https://repobeats.axiom.co/api/embed/f7755d6c54108961b98e66b3e26aa12467444763.svg "Repobeats analytics image")
 
-### Supported by
-
-[JetBrains](https://jb.gg/OpenSourceSupport)
-
-![JetBrains Logo (Main) logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)
