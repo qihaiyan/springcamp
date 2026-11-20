@@ -93,7 +93,7 @@ class DemoApplicationTest {
         DefaultKafkaProducerFactory<String, String> pf = new DefaultKafkaProducerFactory<>(senderProps);
         kafkaTemplate = new KafkaTemplate<>(pf, true);
 
-        Map<String, Object> consumerProps = KafkaTestUtils.consumerProps(GROUP_NAME, "false", embeddedKafka);
+        Map<String, Object> consumerProps = KafkaTestUtils.consumerProps(embeddedKafka, GROUP_NAME, false);
         DefaultKafkaConsumerFactory<String, String> cf = new DefaultKafkaConsumerFactory<>(consumerProps);
         consumer = cf.createConsumer();
         embeddedKafka.consumeFromAnEmbeddedTopic(consumer, OUTPUT_TOPIC);
